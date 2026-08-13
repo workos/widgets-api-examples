@@ -1,0 +1,59 @@
+.stack {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+.searchRow {
+	border-bottom: 1px solid var(--color-line);
+	padding: var(--space-3) var(--space-5);
+}
+
+.alignRight {
+	text-align: right;
+}
+
+.mutedCell {
+	color: var(--color-ink-muted);
+}
+
+.directoryLink {
+	text-align: left;
+	font-weight: var(--font-weight-medium);
+}
+
+.directoryLinkDim {
+	color: var(--color-ink-muted);
+}
+
+.directoryLinkActive {
+	color: var(--color-accent-ink);
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.directoryId {
+	font-family: var(--font-mono);
+	font-size: var(--text-2xs);
+	color: var(--color-ink-subtle);
+}
+
+.badgeDim {
+	opacity: 0.6;
+}
+
+.externalKey {
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+.updatedCell {
+	text-align: right;
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}

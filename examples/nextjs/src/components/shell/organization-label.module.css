@@ -1,0 +1,14 @@
+.placeholder {
+	display: inline-block;
+	height: var(--space-3);
+	width: calc(var(--spacing) * 24);
+	border-radius: var(--radius-sm);
+	background-color: var(--color-line);
+	animation: pulse 2s var(--ease-in-out) infinite;
+}
+
+@media (--motion-reduce) {
+	.placeholder {
+		animation: none;
+	}
+}

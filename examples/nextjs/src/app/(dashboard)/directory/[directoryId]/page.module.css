@@ -1,0 +1,8 @@
+.backLink {
+	color: var(--color-accent);
+
+	&:hover {
+		color: var(--color-accent-hover);
+		text-decoration: underline;
+	}
+}

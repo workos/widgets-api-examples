@@ -1,0 +1,247 @@
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+/* Stat cards --------------------------------------------------------------- */
+
+.statGrid {
+	display: grid;
+	gap: var(--space-4);
+
+	@media (--sm) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	@media (--lg) {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+.stat {
+	padding: var(--space-5);
+}
+
+.statLabel {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	font-weight: var(--font-weight-medium);
+	letter-spacing: var(--tracking-wide);
+	color: var(--color-ink-subtle);
+}
+
+.statValue {
+	margin-top: var(--space-1);
+	font-size: var(--text-3xl);
+	line-height: var(--text-3xl-leading);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: -0.025em;
+	color: var(--color-ink);
+}
+
+.statHint {
+	margin-top: var(--space-1);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+/* Two-column split --------------------------------------------------------- */
+
+.split {
+	display: grid;
+	gap: var(--space-6);
+
+	@media (--md) {
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+	}
+}
+
+.activityColumn {
+	@media (--md) {
+		grid-column: span 3 / span 3;
+	}
+
+	@media (--xl) {
+		grid-column: span 4 / span 4;
+	}
+}
+
+.sideColumn {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+
+	@media (--md) {
+		grid-column: span 3 / span 3;
+	}
+
+	@media (--xl) {
+		grid-column: span 2 / span 2;
+	}
+}
+
+.headerLink {
+	font-size: var(--text-13);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-accent-ink);
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+/* Recent activity ---------------------------------------------------------- */
+
+.activityCell {
+	width: 100%;
+}
+
+.activityAction {
+	font-weight: var(--font-weight-medium);
+	color: var(--color-ink);
+}
+
+.activityActor {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+.activityTime {
+	white-space: nowrap;
+	text-align: right;
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+/* Your access -------------------------------------------------------------- */
+
+.accessBody {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-3);
+}
+
+.identity {
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+}
+
+.identityText {
+	min-width: 0;
+}
+
+.identityName {
+	composes: truncate from "../../styles/shared.module.css";
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-ink);
+}
+
+.identityEmail {
+	composes: truncate from "../../styles/shared.module.css";
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+.permissionsNote {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+.permissionList {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-1-5);
+}
+
+.permission {
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-md);
+	background-color: var(--color-raised);
+	padding: var(--space-0-5) var(--space-1-5);
+	font-family: var(--font-mono);
+	font-size: var(--text-2xs);
+	color: var(--color-ink-subtle);
+}
+
+/* Organization ------------------------------------------------------------- */
+
+.detailList {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2-5);
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+}
+
+.detailCode {
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+.row {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: var(--space-4);
+}
+
+.rowLabel {
+	color: var(--color-ink-muted);
+}
+
+.rowValue {
+	min-width: 0;
+	text-align: right;
+	font-weight: var(--font-weight-medium);
+	color: var(--color-ink);
+}
+
+/* Newest members ----------------------------------------------------------- */
+
+.lastActiveHeader {
+	text-align: right;
+}
+
+.member {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2-5);
+}
+
+.memberText {
+	min-width: 0;
+}
+
+.memberName {
+	composes: truncate from "../../styles/shared.module.css";
+	font-weight: var(--font-weight-medium);
+}
+
+.memberEmail {
+	composes: truncate from "../../styles/shared.module.css";
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+.memberRoles {
+	color: var(--color-ink-muted);
+}
+
+.memberActivity {
+	text-align: right;
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}

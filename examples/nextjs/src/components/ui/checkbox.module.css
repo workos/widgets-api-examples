@@ -1,0 +1,64 @@
+.group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-1-5);
+}
+
+.legend {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	gap: var(--space-2);
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-ink);
+}
+
+.legendHidden {
+	composes: visuallyHidden from "../../styles/shared.module.css";
+}
+
+.options {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	gap: var(--space-2);
+}
+
+.invalidText {
+	color: var(--color-critical);
+}
+
+.description {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+/* Individual checkbox ------------------------------------------------------ */
+
+.checkbox {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+}
+
+.label {
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-ink);
+}
+
+.labelMono {
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+}
+
+.labelDisabled {
+	color: var(--color-ink-disabled);
+}

@@ -1,0 +1,95 @@
+.widget {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+/* Toolbar ------------------------------------------------------------------ */
+
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-3);
+	padding: var(--space-3) var(--space-5);
+	border-bottom: 1px solid var(--color-line);
+}
+
+.searchField {
+	position: relative;
+	flex: 1 1 0%;
+	min-width: calc(var(--spacing) * 56);
+}
+
+/* Table -------------------------------------------------------------------- */
+
+.actionsHeader {
+	text-align: right;
+}
+
+.member {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2-5);
+}
+
+.memberText {
+	min-width: 0;
+}
+
+.memberName {
+	composes: truncate from "../../styles/shared.module.css";
+	font-weight: var(--font-weight-medium);
+}
+
+.memberEmail {
+	composes: truncate from "../../styles/shared.module.css";
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+.roleCell {
+	width: auto;
+	min-width: calc(var(--spacing) * 32);
+	padding-block: var(--space-1-5);
+}
+
+.lastActiveCell {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+.actionsCell {
+	text-align: right;
+}
+
+.actions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: var(--space-1);
+}
+
+.actionButtons {
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--space-1);
+}
+
+/* Pagination --------------------------------------------------------------- */
+
+.pagination {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+}
+
+/* Invite dialog ------------------------------------------------------------ */
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+}

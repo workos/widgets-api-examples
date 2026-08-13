@@ -1,0 +1,1 @@
+export const DEMO_VERIFICATION_CODE = "424242";

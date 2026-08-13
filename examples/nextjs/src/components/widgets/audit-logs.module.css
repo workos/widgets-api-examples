@@ -1,0 +1,197 @@
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+/* Filters and export status ------------------------------------------------ */
+
+.filters {
+	display: grid;
+	gap: var(--space-3);
+	border-bottom: 1px solid var(--color-line);
+	padding: var(--space-4) var(--space-5);
+
+	@media (--sm) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	@media (--lg) {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+.exportError {
+	border-bottom: 1px solid var(--color-line);
+	padding: var(--space-3) var(--space-5);
+}
+
+.exportStatus {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-2);
+	border-bottom: 1px solid var(--color-line);
+	padding: var(--space-3) var(--space-5);
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+}
+
+.exportDownload {
+	margin-left: auto;
+}
+
+.exportId {
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+}
+
+.exportIdSkeleton {
+	color: transparent;
+}
+
+/* Events table ------------------------------------------------------------- */
+
+.eventsSkeleton {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+	padding: var(--space-5);
+}
+
+.eventsSkeletonRow {
+	height: var(--space-10);
+}
+
+.whenHeader {
+	text-align: right;
+}
+
+.actionButton {
+	text-align: left;
+	font-weight: var(--font-weight-medium);
+	color: var(--color-accent-ink);
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.actionSlug {
+	font-family: var(--font-mono);
+	font-size: var(--text-2xs);
+	color: var(--color-ink-subtle);
+}
+
+.actorCell {
+	color: var(--color-ink-muted);
+}
+
+.actorTypeLine {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+.targets {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-1);
+}
+
+.targetTag {
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-sm);
+	background-color: var(--color-raised);
+	padding: var(--space-0-5) var(--space-1);
+	font-family: var(--font-mono);
+	font-size: var(--text-3xs);
+	color: var(--color-ink-subtle);
+}
+
+.whenCell {
+	text-align: right;
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+.pagination {
+	display: flex;
+	gap: var(--space-2);
+}
+
+/* Event detail dialog ------------------------------------------------------ */
+
+.detailSkeleton {
+	height: calc(var(--spacing) * 32);
+}
+
+.detail {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-3);
+}
+
+.detailGrid {
+	display: grid;
+	gap: var(--space-2);
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+
+	@media (--sm) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.detailWide {
+	@media (--sm) {
+		grid-column: span 2 / span 2;
+	}
+}
+
+.detailLabel {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+.actorType {
+	margin-left: var(--space-1);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+.targetList {
+	margin-top: var(--space-1);
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-1);
+}
+
+.target {
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-sm);
+	background-color: var(--color-raised);
+	padding: var(--space-0-5) var(--space-1-5);
+	font-family: var(--font-mono);
+	font-size: var(--text-2xs);
+	color: var(--color-ink-subtle);
+}
+
+.detailId {
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+.dataLabel {
+	margin-bottom: var(--space-1);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-ink-subtle);
+}

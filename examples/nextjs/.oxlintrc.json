@@ -1,0 +1,11 @@
+{
+	"$schema": "../../node_modules/oxlint/configuration_schema.json",
+	"extends": ["../../.oxlintrc.json"],
+	"plugins": ["react", "jsx-a11y"],
+	"categories": {
+		"correctness": "warn"
+	},
+	"rules": {
+		"react/react-compiler": "warn"
+	}
+}

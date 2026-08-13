@@ -1,0 +1,18 @@
+.root {
+	margin-bottom: var(--space-6);
+}
+
+.title {
+	font-size: var(--text-xl);
+	line-height: var(--text-xl-leading);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: -0.025em;
+	color: var(--color-ink);
+}
+
+.description {
+	margin-top: var(--space-1);
+	max-width: 48rem;
+	font-size: var(--text-sm);
+	color: var(--color-ink-muted);
+}

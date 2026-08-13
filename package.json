@@ -1,0 +1,24 @@
+{
+	"name": "widgets-api-examples",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Example applications for the WorkOS Widgets API",
+	"license": "ISC",
+	"scripts": {
+		"build": "pnpm -r build",
+		"dev": "pnpm -r --parallel dev",
+		"start": "pnpm -r --parallel start",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"fmt": "oxfmt",
+		"fmt:check": "oxfmt --check"
+	},
+	"devDependencies": {
+		"oxfmt": "^0.62.0",
+		"oxlint": "^1.77.0"
+	},
+	"engines": {
+		"node": ">=20"
+	},
+	"packageManager": "pnpm@10.33.0"
+}

@@ -1,0 +1,82 @@
+name: Build examples
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    name: Discover examples
+    runs-on: ubuntu-latest
+    outputs:
+      examples: ${{ steps.discover.outputs.examples }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - id: discover
+        name: Find example apps with a build script
+        run: |
+          set -euo pipefail
+          examples="$(
+            {
+              for pkg in examples/*/package.json; do
+                if [[ -f "$pkg" ]] && jq -e '.scripts.build' "$pkg" >/dev/null; then
+                  dirname "$pkg"
+                fi
+              done
+            } | jq -R -s -c 'split("\n") | map(select(length > 0))'
+          )"
+          echo "examples=${examples}" >> "$GITHUB_OUTPUT"
+          echo "Found example apps: ${examples}"
+          if [[ "${examples}" == "[]" ]]; then
+            echo "::error::No example apps with a build script were found under examples/"
+            exit 1
+          fi
+
+  build:
+    name: Build ${{ matrix.example }}
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        example: ${{ fromJson(needs.discover.outputs.examples) }}
+    env:
+      # Examples default to demo mode so CI does not need WorkOS credentials.
+      WIDGETS_DEMO_MODE: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Apply example env file
+        working-directory: ${{ matrix.example }}
+        run: |
+          if [[ -f .env.example && ! -f .env.local && ! -f .env ]]; then
+            cp .env.example .env.local
+          fi
+
+      - name: Build
+        working-directory: ${{ matrix.example }}
+        run: pnpm build

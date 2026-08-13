@@ -1,0 +1,170 @@
+.widget {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+/* Role list ---------------------------------------------------------------- */
+
+.roleList {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-3);
+}
+
+.roleCard {
+	padding: var(--space-4);
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-lg);
+	background-color: var(--color-raised-50);
+}
+
+.roleCardTop {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: var(--space-3);
+}
+
+.roleNameRow {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+}
+
+.roleName {
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-ink);
+}
+
+.roleSlug {
+	margin-top: var(--space-0-5);
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+.roleDescription {
+	margin-top: var(--space-1-5);
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+	color: var(--color-ink-muted);
+}
+
+.roleActions {
+	display: flex;
+	gap: var(--space-1-5);
+}
+
+.roleError {
+	margin-top: var(--space-3);
+}
+
+/* Panels ------------------------------------------------------------------- */
+
+.panels {
+	display: grid;
+	gap: var(--space-6);
+
+	@media (--lg) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+/* Environment permissions -------------------------------------------------- */
+
+.permissionList {
+	composes: scrollbarSlim from "../../styles/shared.module.css";
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-1-5);
+	max-height: calc(var(--spacing) * 96);
+	overflow-y: auto;
+}
+
+.permissionRow {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: var(--space-3);
+	padding: var(--space-1-5) var(--space-2);
+	border-radius: var(--radius-md);
+
+	&:hover {
+		background-color: var(--color-raised);
+	}
+}
+
+.permissionText {
+	min-width: 0;
+}
+
+.permissionSlug {
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	color: var(--color-ink);
+}
+
+.permissionName {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+/* Effective permissions ---------------------------------------------------- */
+
+.effectiveBody {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+}
+
+.effectiveSkeleton {
+	height: calc(var(--spacing) * 24);
+}
+
+.permissionChips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-1-5);
+}
+
+.permissionChip {
+	padding: var(--space-0-5) var(--space-1-5);
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-md);
+	background-color: var(--color-raised);
+	font-family: var(--font-mono);
+	font-size: var(--text-2xs);
+	color: var(--color-ink-subtle);
+}
+
+.noPermissions {
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+	color: var(--color-ink-muted);
+}
+
+/* Role form dialog --------------------------------------------------------- */
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-4);
+}
+
+.permissionPicker {
+	composes: scrollbarSlim from "../../styles/shared.module.css";
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-1);
+	max-height: calc(var(--spacing) * 48);
+	padding: var(--space-2);
+	overflow-y: auto;
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-lg);
+}

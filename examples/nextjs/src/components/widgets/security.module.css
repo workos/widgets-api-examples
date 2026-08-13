@@ -1,0 +1,180 @@
+.cards {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+}
+
+/* Elevation panel ---------------------------------------------------------- */
+
+.elevation {
+	padding: var(--space-4);
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-lg);
+	background-color: var(--color-raised);
+
+	& > * + * {
+		margin-top: var(--space-3);
+	}
+}
+
+.elevationText {
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+	color: var(--color-ink-muted);
+}
+
+.elevationCode {
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+}
+
+.codeMono {
+	font-family: var(--font-mono);
+}
+
+/* Code-and-button rows shared by the elevation, MFA, and email flows. */
+.inlineForm {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: var(--space-2);
+}
+
+.inlineFormField {
+	flex: 1 1 0%;
+	min-width: calc(var(--spacing) * 40);
+}
+
+/* Sessions ----------------------------------------------------------------- */
+
+.errorRow {
+	padding: var(--space-3) var(--space-5);
+	border-bottom: 1px solid var(--color-line);
+}
+
+.actionsHeader {
+	text-align: right;
+}
+
+.device {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+}
+
+.deviceName {
+	font-weight: var(--font-weight-medium);
+}
+
+.deviceAddress {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+.locationCell {
+	color: var(--color-ink-muted);
+}
+
+.timeCell {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-subtle);
+}
+
+.actionsCell {
+	text-align: right;
+}
+
+.revokeActions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: var(--space-1);
+}
+
+/* Passkeys ----------------------------------------------------------------- */
+
+.passkeyId {
+	font-family: var(--font-mono);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+/* Password ----------------------------------------------------------------- */
+
+.modeToggle {
+	display: flex;
+	padding: var(--space-0-5);
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-lg);
+}
+
+.modeButton {
+	padding: var(--space-1) var(--space-2-5);
+	border-radius: var(--radius-md);
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	font-weight: var(--font-weight-medium);
+}
+
+.modeButtonActive {
+	background-color: var(--color-accent-soft);
+	color: var(--color-accent-ink);
+}
+
+.modeButtonInactive {
+	color: var(--color-ink-muted);
+}
+
+/*
+ * Card bodies and forms stack block-level children. They use sibling margins
+ * rather than flex, so inline-level children (buttons) keep their intrinsic
+ * width.
+ */
+.cardStack {
+	& > * + * {
+		margin-top: var(--space-4);
+	}
+}
+
+.fieldStack {
+	& > * + * {
+		margin-top: var(--space-3);
+	}
+}
+
+/* Authenticator app -------------------------------------------------------- */
+
+.qrCode {
+	width: calc(var(--spacing) * 40);
+	height: calc(var(--spacing) * 40);
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-lg);
+}
+
+.secret {
+	font-size: var(--text-xs);
+	line-height: var(--text-xs-leading);
+	color: var(--color-ink-muted);
+}
+
+.secretValue {
+	font-family: var(--font-mono);
+	color: var(--color-ink);
+}
+
+/* Change email ------------------------------------------------------------- */
+
+.currentEmail {
+	font-size: var(--text-sm);
+	line-height: var(--text-sm-leading);
+	color: var(--color-ink-muted);
+}
+
+.currentEmailValue {
+	font-weight: var(--font-weight-medium);
+	color: var(--color-ink);
+}
