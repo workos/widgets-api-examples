@@ -28,7 +28,7 @@ Sensitive flows that normally email a code (MFA, email change, create password) 
 ## Live mode
 
 1. Enable the Widgets API closed beta with WorkOS.
-2. Create an AuthKit app and set redirect URI to `http://localhost:3000/callback` (and Sign-in URL to `http://localhost:3000/sign-in`).
+2. Create an AuthKit app and set redirect URI to `http://localhost:3000/authkit/callback` (and Sign-in URL to `http://localhost:3000/sign-in`).
 3. Put credentials in `.env.local` and **remove or set `WIDGETS_DEMO_MODE=0`**.
 4. Add yourself to an organization (tokens are org-scoped).
 5. `pnpm dev` and sign in.
