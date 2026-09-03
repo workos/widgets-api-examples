@@ -5,7 +5,7 @@ import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
 import { NAV_SECTIONS } from "./nav";
-import { OrganizationLabel } from "./organization-label";
+import { OrganizationSwitcher } from "./organization-switcher";
 import { usePathname } from "next/navigation";
 
 export function MobileNavigationTrigger(props: React.ComponentPropsWithoutRef<"button">) {
@@ -82,7 +82,7 @@ function SidebarImpl({
 				<div className="AppShellIdentity">
 					<p className="AppShellAppName truncate">SuperApp</p>
 					<p className="AppShellOrganization truncate">
-						<OrganizationLabel />
+						<OrganizationSwitcher />
 					</p>
 				</div>
 				<button

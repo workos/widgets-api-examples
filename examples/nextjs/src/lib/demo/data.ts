@@ -175,9 +175,9 @@ export function createDemoDatabase() {
 		updatedAt: ago(2 * DAY),
 	};
 
-	// The example is deliberately single-tenant. A session token is always scoped
-	// to one organization, so every widget reads from the token's org rather than
-	// offering a tenant picker.
+	// The demo fixtures are deliberately single-tenant: every record below hangs
+	// off one organization. Live mode can return several here, which is what the
+	// sidebar switcher lists.
 	const organizations = [{ id: DEMO_ORG_ID, name: "Northstar Labs", isCurrent: true }];
 
 	const organization = {

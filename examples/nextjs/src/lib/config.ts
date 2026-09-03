@@ -44,6 +44,26 @@ export function isLiveMode(): boolean {
 	return getAppMode() === "live";
 }
 
+/**
+ * Absolute origin this deployment is reachable at, derived from the redirect URI
+ * so there is one source of truth. WorkOS already sends users back to that URI
+ * after sign-in, so its origin is the app's public homepage by definition —
+ * including on preview deployments, which have to set the variable anyway.
+ */
+export function getAppOrigin(): string | null {
+	const redirectUri = process.env.NEXT_PUBLIC_WORKOS_REDIRECT_URI;
+
+	if (!redirectUri) {
+		return null;
+	}
+
+	try {
+		return new URL(redirectUri).origin;
+	} catch {
+		return null;
+	}
+}
+
 export function missingLiveEnvVars(): string[] {
 	return LIVE_ENV_VARS.filter((name) => !process.env[name]);
 }

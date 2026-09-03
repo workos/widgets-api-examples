@@ -18,9 +18,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 	const session = await getAppSession();
 
 	if (!session) {
-		// Live mode only; AuthKit is configured but nobody is signed in yet
-		const { getSignInUrl } = await import("@workos-inc/authkit-nextjs");
-		return redirect<any>(await getSignInUrl());
+		redirect("/sign-in");
 	}
 
 	// Step 1: mint a Client API token for this user + organization
@@ -34,8 +32,10 @@ export default async function DashboardLayout({ children }: { children: React.Re
 	await prefetchGraphqlQueries([{ document: ORGANIZATIONS_QUERY }]);
 
 	return (
-		// Step 2: hand the token to the GraphQL client
-		<WidgetsApiProvider initialToken={token.token} mode={getAppMode()}>
+		// Step 2: hand the token to the GraphQL client. Keying on the organization
+		// discards the query cache and the cached token when the user switches
+		// tenants, since both are scoped to the organization they were minted for.
+		<WidgetsApiProvider key={session.organizationId} initialToken={token.token} mode={getAppMode()}>
 			<HydrationBoundary state={dehydrateQueryClient()}>
 				<AppSessionProvider
 					value={{

@@ -11,6 +11,7 @@
 @import "../components/ui/table.css";
 @import "../components/shell/app-shell.css";
 @import "../components/shell/organization-label.css";
+@import "../components/shell/organization-switcher.css";
 @import "../components/shell/setup-required.css";
 @import "../components/widgets/overview.css";
 @import "../components/widgets/members.css";
