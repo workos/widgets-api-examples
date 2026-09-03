@@ -1,4 +1,4 @@
-.overlay {
+.ui-DialogOverlay {
 	position: fixed;
 	inset: 0;
 	z-index: var(--z-dialog);
@@ -6,7 +6,7 @@
 	backdrop-filter: blur(2px);
 }
 
-.content {
+.ui-DialogContent {
 	position: fixed;
 	inset: 0;
 	z-index: var(--z-dialog);
@@ -30,7 +30,7 @@
 	}
 }
 
-.panel {
+.ui-DialogPanel {
 	position: relative;
 	margin-block: auto;
 	width: 100%;
@@ -38,38 +38,38 @@
 	border-radius: var(--radius-xl);
 	background-color: var(--color-surface);
 	box-shadow: var(--shadow-dialog);
+
+	&:where([data-ui-dialog-width="md"]) {
+		max-width: 28rem;
+	}
+
+	&:where([data-ui-dialog-width="lg"]) {
+		max-width: 42rem;
+	}
 }
 
-.widthMd {
-	max-width: 28rem;
-}
-
-.widthLg {
-	max-width: 42rem;
-}
-
-.header {
+.ui-DialogHeader {
 	border-bottom: 1px solid var(--color-line);
 	padding: var(--space-4) var(--space-5);
 }
 
-.title {
+.ui-DialogTitle {
 	font-size: var(--text-sm);
 	font-weight: var(--font-weight-semibold);
 	color: var(--color-ink);
 }
 
-.description {
+.ui-DialogDescription {
 	margin-top: var(--space-1);
 	font-size: var(--text-sm);
 	color: var(--color-ink-muted);
 }
 
-.body {
+.ui-DialogBody {
 	padding: var(--space-4) var(--space-5);
 }
 
-.footer {
+.ui-DialogFooter {
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;

@@ -41,8 +41,6 @@ import { CheckboxGroup, Checkbox } from "@/components/ui/checkbox";
 import { useResetDialogKey } from "@/lib/use-reset-dialog-key";
 import { getErrorMessage } from "@/lib/utils";
 
-import styles from "./roles.module.css";
-
 export function RolesWidget() {
 	const roles = useQuery<RolesQueryResult>(ROLES_QUERY);
 	const permissions = useQuery<PermissionsQueryResult>(PERMISSIONS_QUERY);
@@ -162,7 +160,7 @@ export function RolesWidgetImpl({
 	);
 
 	return (
-		<div className={styles.widget}>
+		<div className="RolesWidget">
 			<Card>
 				<CardHeader
 					title="Roles"
@@ -178,21 +176,21 @@ export function RolesWidgetImpl({
 						</Button>
 					}
 				/>
-				<CardBody className={styles.roleList}>
+				<CardBody className="RolesRoleList">
 					{roles.map((role) => (
-						<div key={role.id} className={styles.roleCard}>
-							<div className={styles.roleCardTop}>
+						<div key={role.id} className="RolesRoleCard">
+							<div className="RolesRoleCardTop">
 								<div>
-									<div className={styles.roleNameRow}>
-										<p className={styles.roleName}>{role.name}</p>
+									<div className="RolesRoleNameRow">
+										<p className="RolesRoleName">{role.name}</p>
 										{role.isDefault ? <Badge tone="accent">Default</Badge> : null}
 									</div>
-									<p className={styles.roleSlug}>{role.slug}</p>
+									<p className="RolesRoleSlug">{role.slug}</p>
 									{role.description ? (
-										<p className={styles.roleDescription}>{role.description}</p>
+										<p className="RolesRoleDescription">{role.description}</p>
 									) : null}
 								</div>
-								<div className={styles.roleActions}>
+								<div className="RolesRoleActions">
 									<Button size="sm" onClick={() => dialogDispatch({ type: "open-edit", role })}>
 										Edit
 									</Button>
@@ -218,7 +216,7 @@ export function RolesWidgetImpl({
 								</div>
 							</div>
 							{deleteMutation.error && deletingId === role.id ? (
-								<div className={styles.roleError}>
+								<div className="RolesRoleError">
 									<ErrorText>{deleteMutation.error.message}</ErrorText>
 								</div>
 							) : null}
@@ -227,15 +225,15 @@ export function RolesWidgetImpl({
 				</CardBody>
 			</Card>
 
-			<div className={styles.panels}>
+			<div className="RolesPanels">
 				<Card>
 					<CardHeader title="Environment permissions" />
-					<CardBody className={styles.permissionList}>
+					<CardBody className="RolesPermissionList scrollbar-slim">
 						{permissions.map((permission) => (
-							<div key={permission.id} className={styles.permissionRow}>
-								<div className={styles.permissionText}>
-									<p className={styles.permissionSlug}>{permission.slug}</p>
-									<p className={styles.permissionName}>{permission.name}</p>
+							<div key={permission.id} className="RolesPermissionRow">
+								<div className="RolesPermissionText">
+									<p className="RolesPermissionSlug">{permission.slug}</p>
+									<p className="RolesPermissionName">{permission.name}</p>
 								</div>
 								{permission.system ? (
 									<Badge tone="neutral">System</Badge>
@@ -249,7 +247,7 @@ export function RolesWidgetImpl({
 
 				<Card>
 					<CardHeader title="Effective permissions" />
-					<CardBody className={styles.effectiveBody}>
+					<CardBody className="RolesEffectiveBody">
 						<FormField
 							type="select"
 							name="member"
@@ -265,25 +263,25 @@ export function RolesWidgetImpl({
 							]}
 						/>
 						{effective.isPending ? (
-							<Skeleton className={styles.effectiveSkeleton} />
+							<Skeleton className="RolesEffectiveSkeleton" />
 						) : effective.error ? (
 							<EmptyState
 								title="Could not load effective permissions"
 								description={effective.error.message}
 							/>
 						) : (
-							<div className={styles.permissionChips}>
+							<div className="RolesPermissionChips">
 								{(effective.data?.effectivePermissions ?? []).map((permission) => (
 									<code
 										key={permission.id}
 										title={permissionBySlug.get(permission.slug)?.description ?? undefined}
-										className={styles.permissionChip}
+										className="RolesPermissionChip"
 									>
 										{permission.slug}
 									</code>
 								))}
 								{!effective.data?.effectivePermissions.length ? (
-									<p className={styles.noPermissions}>No permissions.</p>
+									<p className="RolesNoPermissions">No permissions.</p>
 								) : null}
 							</div>
 						)}
@@ -488,7 +486,7 @@ function RoleFormDialog({
 				</>
 			}
 		>
-			<form id="role-form" className={styles.form} onSubmit={handleSubmit}>
+			<form id="role-form" className="RolesForm" onSubmit={handleSubmit}>
 				<FormField
 					name="name"
 					required
@@ -533,7 +531,7 @@ function RoleFormDialog({
 							: "Optional starting set."
 					}
 				>
-					<div className={styles.permissionPicker}>
+					<div className="RolesPermissionPicker scrollbar-slim">
 						{permissions.map((permission) => (
 							<Checkbox
 								key={permission.slug}

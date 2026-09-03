@@ -1,57 +1,57 @@
-.stack {
+.DirectoriesStack {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-6);
 }
 
-.searchRow {
+.DirectoriesSearchRow {
 	border-bottom: 1px solid var(--color-line);
 	padding: var(--space-3) var(--space-5);
 }
 
-.alignRight {
+.DirectoriesAlignRight {
 	text-align: right;
 }
 
-.mutedCell {
+.DirectoriesMutedCell {
 	color: var(--color-ink-muted);
 }
 
-.directoryLink {
+.DirectoriesDirectoryLink {
 	text-align: left;
 	font-weight: var(--font-weight-medium);
-}
 
-.directoryLinkDim {
-	color: var(--color-ink-muted);
-}
+	&:where([data-state="dim"]) {
+		color: var(--color-ink-muted);
+	}
 
-.directoryLinkActive {
-	color: var(--color-accent-ink);
+	&:where([data-state="active"]) {
+		color: var(--color-accent-ink);
 
-	&:hover {
-		text-decoration: underline;
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 }
 
-.directoryId {
+.DirectoriesDirectoryId {
 	font-family: var(--font-mono);
 	font-size: var(--text-2xs);
 	color: var(--color-ink-subtle);
 }
 
-.badgeDim {
+.DirectoriesBadgeDim {
 	opacity: 0.6;
 }
 
-.externalKey {
+.DirectoriesExternalKey {
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-subtle);
 }
 
-.updatedCell {
+.DirectoriesUpdatedCell {
 	text-align: right;
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);

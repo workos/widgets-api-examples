@@ -1,8 +1,8 @@
-.root {
+.ui-PageTitleSection {
 	margin-bottom: var(--space-6);
 }
 
-.title {
+.ui-PageTitleSectionTitle {
 	font-size: var(--text-xl);
 	line-height: var(--text-xl-leading);
 	font-weight: var(--font-weight-semibold);
@@ -10,7 +10,7 @@
 	color: var(--color-ink);
 }
 
-.description {
+.ui-PageTitleSectionDescription {
 	margin-top: var(--space-1);
 	max-width: 48rem;
 	font-size: var(--text-sm);

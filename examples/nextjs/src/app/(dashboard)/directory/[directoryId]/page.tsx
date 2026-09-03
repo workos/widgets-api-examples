@@ -11,8 +11,6 @@ import { findNavItem } from "@/components/shell/nav";
 import { PageTitleSection } from "@/components/ui/page-title-section";
 import Link from "next/link";
 
-import styles from "./page.module.css";
-
 export default async function DirectoryPage(pageProps: PageProps<"/directory/[directoryId]">) {
 	const { directoryId } = await pageProps.params;
 	await prefetchGraphqlQueries([
@@ -30,7 +28,7 @@ export default async function DirectoryPage(pageProps: PageProps<"/directory/[di
 					<>
 						Browse directory connections and the users and groups they provision.{" "}
 						<Link href="/directory">
-							<span className={styles.backLink}>View all directories</span>
+							<span className="DirectoryPageBackLink">View all directories</span>
 						</Link>
 					</>
 				}

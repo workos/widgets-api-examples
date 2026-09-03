@@ -1,4 +1,4 @@
-.page {
+.AuditLogsPage {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-6);
@@ -6,7 +6,7 @@
 
 /* Filters and export status ------------------------------------------------ */
 
-.filters {
+.AuditLogsFilters {
 	display: grid;
 	gap: var(--space-3);
 	border-bottom: 1px solid var(--color-line);
@@ -21,12 +21,12 @@
 	}
 }
 
-.exportError {
+.AuditLogsExportError {
 	border-bottom: 1px solid var(--color-line);
 	padding: var(--space-3) var(--space-5);
 }
 
-.exportStatus {
+.AuditLogsExportStatus {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -37,38 +37,38 @@
 	line-height: var(--text-sm-leading);
 }
 
-.exportDownload {
+.AuditLogsExportDownload {
 	margin-left: auto;
 }
 
-.exportId {
+.AuditLogsExportId {
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 }
 
-.exportIdSkeleton {
+.AuditLogsExportIdSkeleton {
 	color: transparent;
 }
 
 /* Events table ------------------------------------------------------------- */
 
-.eventsSkeleton {
+.AuditLogsEventsSkeleton {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-2);
 	padding: var(--space-5);
 }
 
-.eventsSkeletonRow {
+.AuditLogsEventsSkeletonRow {
 	height: var(--space-10);
 }
 
-.whenHeader {
+.AuditLogsWhenHeader {
 	text-align: right;
 }
 
-.actionButton {
+.AuditLogsActionButton {
 	text-align: left;
 	font-weight: var(--font-weight-medium);
 	color: var(--color-accent-ink);
@@ -78,29 +78,29 @@
 	}
 }
 
-.actionSlug {
+.AuditLogsActionSlug {
 	font-family: var(--font-mono);
 	font-size: var(--text-2xs);
 	color: var(--color-ink-subtle);
 }
 
-.actorCell {
+.AuditLogsActorCell {
 	color: var(--color-ink-muted);
 }
 
-.actorTypeLine {
+.AuditLogsActorTypeLine {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-subtle);
 }
 
-.targets {
+.AuditLogsTargets {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-1);
 }
 
-.targetTag {
+.AuditLogsTargetTag {
 	border: 1px solid var(--color-line);
 	border-radius: var(--radius-sm);
 	background-color: var(--color-raised);
@@ -110,31 +110,31 @@
 	color: var(--color-ink-subtle);
 }
 
-.whenCell {
+.AuditLogsWhenCell {
 	text-align: right;
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-subtle);
 }
 
-.pagination {
+.AuditLogsPagination {
 	display: flex;
 	gap: var(--space-2);
 }
 
 /* Event detail dialog ------------------------------------------------------ */
 
-.detailSkeleton {
+.AuditLogsDetailSkeleton {
 	height: calc(var(--spacing) * 32);
 }
 
-.detail {
+.AuditLogsDetail {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-3);
 }
 
-.detailGrid {
+.AuditLogsDetailGrid {
 	display: grid;
 	gap: var(--space-2);
 	font-size: var(--text-sm);
@@ -145,33 +145,33 @@
 	}
 }
 
-.detailWide {
+.AuditLogsDetailWide {
 	@media (--sm) {
 		grid-column: span 2 / span 2;
 	}
 }
 
-.detailLabel {
+.AuditLogsDetailLabel {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-subtle);
 }
 
-.actorType {
+.AuditLogsActorType {
 	margin-left: var(--space-1);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-subtle);
 }
 
-.targetList {
+.AuditLogsTargetList {
 	margin-top: var(--space-1);
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-1);
 }
 
-.target {
+.AuditLogsTarget {
 	border: 1px solid var(--color-line);
 	border-radius: var(--radius-sm);
 	background-color: var(--color-raised);
@@ -181,14 +181,14 @@
 	color: var(--color-ink-subtle);
 }
 
-.detailId {
+.AuditLogsDetailId {
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.dataLabel {
+.AuditLogsDataLabel {
 	margin-bottom: var(--space-1);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);

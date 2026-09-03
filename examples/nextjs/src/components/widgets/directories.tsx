@@ -14,9 +14,6 @@ import { directoryPageVariables } from "@/lib/graphql/page-queries";
 import { useDebouncedValue } from "@/lib/use-debounced-value";
 import { getErrorMessage } from "@/lib/utils";
 import Link from "next/link";
-import cn from "clsx";
-
-import styles from "./directories.module.css";
 
 export function DirectoriesWidget() {
 	const directories = useQuery<DirectoryConnectionsQueryResult>(DIRECTORY_CONNECTIONS_QUERY, {
@@ -75,14 +72,14 @@ export function DirectoriesWidgetImpl({ directories }: { directories: Directory[
 		(filteredDirectoriesResult.isPending || filteredDirectoriesResult.isPlaceholderData);
 
 	return (
-		<div className={styles.stack}>
+		<div className="DirectoriesStack">
 			<Card>
 				<CardHeader
 					title="Directory connections"
 					description="Directory Sync connections for this organization. Select one to browse users and groups."
 				/>
 				<CardBody padded={false}>
-					<div className={styles.searchRow}>
+					<div className="DirectoriesSearchRow">
 						<FormField
 							name="search-by-name"
 							placeholder="Filter by name"
@@ -107,7 +104,7 @@ export function DirectoriesWidgetImpl({ directories }: { directories: Directory[
 									<Th>Type</Th>
 									<Th>State</Th>
 									<Th>External key</Th>
-									<Th className={styles.alignRight}>Updated</Th>
+									<Th className="DirectoriesAlignRight">Updated</Th>
 								</tr>
 							</thead>
 							<tbody>
@@ -116,10 +113,8 @@ export function DirectoriesWidgetImpl({ directories }: { directories: Directory[
 										<Td>
 											<Link
 												href={`/directory/${directory.id}`}
-												className={cn(
-													styles.directoryLink,
-													isSearching ? styles.directoryLinkDim : styles.directoryLinkActive,
-												)}
+												className="DirectoriesDirectoryLink"
+												data-state={isSearching ? "dim" : "active"}
 												aria-disabled={isSearching || undefined}
 												onClick={(event) => {
 													if (isSearching) event.preventDefault();
@@ -128,21 +123,21 @@ export function DirectoriesWidgetImpl({ directories }: { directories: Directory[
 											>
 												{directory.name}
 											</Link>
-											<p className={styles.directoryId}>{directory.id}</p>
+											<p className="DirectoriesDirectoryId">{directory.id}</p>
 										</Td>
-										<Td className={styles.mutedCell}>{directory.type}</Td>
+										<Td className="DirectoriesMutedCell">{directory.type}</Td>
 										<Td>
 											<Badge
 												tone={directory.state === "linked" ? "positive" : "caution"}
-												className={isSearching ? styles.badgeDim : undefined}
+												className={isSearching ? "DirectoriesBadgeDim" : undefined}
 											>
 												{directory.state}
 											</Badge>
 										</Td>
 										<Td>
-											<code className={styles.externalKey}>{directory.externalKey}</code>
+											<code className="DirectoriesExternalKey">{directory.externalKey}</code>
 										</Td>
-										<Td className={styles.updatedCell}>{relativeTime(directory.updatedAt)}</Td>
+										<Td className="DirectoriesUpdatedCell">{relativeTime(directory.updatedAt)}</Td>
 									</Tr>
 								))}
 							</tbody>

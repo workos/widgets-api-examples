@@ -1,4 +1,4 @@
-.placeholder {
+.OrganizationLabelPlaceholder {
 	display: inline-block;
 	height: var(--space-3);
 	width: calc(var(--spacing) * 24);
@@ -8,7 +8,7 @@
 }
 
 @media (--motion-reduce) {
-	.placeholder {
+	.OrganizationLabelPlaceholder {
 		animation: none;
 	}
 }

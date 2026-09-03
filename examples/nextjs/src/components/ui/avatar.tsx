@@ -1,28 +1,27 @@
 import clsx from "clsx";
 
-import styles from "./avatar.module.css";
+const PALETTE_COUNT = 6;
 
-const PALETTE = [
-	styles.palette0,
-	styles.palette1,
-	styles.palette2,
-	styles.palette3,
-	styles.palette4,
-	styles.palette5,
-];
-
-const SIZES = {
-	sm: styles.sm,
-	md: styles.md,
-	lg: styles.lg,
-};
-
-function initials(firstName?: string | null, lastName?: string | null, email?: string) {
+function getInitials(firstName?: string | null, lastName?: string | null, email?: string) {
 	const first = firstName?.trim()?.[0];
 	const last = lastName?.trim()?.[0];
-	if (first && last) return `${first}${last}`.toUpperCase();
-	if (first) return first.toUpperCase();
+	if (first && last) {
+		return `${first}${last}`.toUpperCase();
+	}
+	if (first) {
+		return first.toUpperCase();
+	}
 	return (email?.trim()?.[0] ?? "?").toUpperCase();
+}
+
+function getDisplayName(firstName?: string | null, lastName?: string | null, email?: string) {
+	if (firstName && lastName) {
+		return `${firstName} ${lastName}`;
+	}
+	if (firstName) {
+		return firstName;
+	}
+	return email?.trim() ?? "";
 }
 
 function paletteIndex(seed: string) {
@@ -30,7 +29,7 @@ function paletteIndex(seed: string) {
 	for (let index = 0; index < seed.length; index += 1) {
 		hash = (hash * 31 + seed.charCodeAt(index)) % 997;
 	}
-	return hash % PALETTE.length;
+	return hash % PALETTE_COUNT;
 }
 
 export function Avatar({
@@ -40,6 +39,7 @@ export function Avatar({
 	src,
 	size = "md",
 	className,
+	...props
 }: {
 	firstName?: string | null;
 	lastName?: string | null;
@@ -47,20 +47,38 @@ export function Avatar({
 	src?: string | null;
 	size?: "sm" | "md" | "lg";
 	className?: string;
+	"aria-hidden"?: boolean;
+	"aria-label"?: string;
+	"aria-labelledby"?: string;
+	"aria-describedby"?: string;
+	ref?: React.Ref<HTMLSpanElement>;
 }) {
-	if (src) {
-		return (
-			// eslint-disable-next-line @next/next/no-img-element -- avatar hosts vary per IdP
-			<img src={src} alt="" className={clsx(styles.image, SIZES[size], className)} />
-		);
-	}
+	const ariaLabel = (() => {
+		if (props["aria-label"]) {
+			return props["aria-label"];
+		}
+		if (props["aria-labelledby"] || props["aria-hidden"]) {
+			return undefined;
+		}
+		return getDisplayName(firstName, lastName, email);
+	})();
 
 	return (
 		<span
-			aria-hidden
-			className={clsx(styles.avatar, PALETTE[paletteIndex(email)], SIZES[size], className)}
+			className={clsx("ui-Avatar", className)}
+			// oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
+			role="img"
+			aria-label={ariaLabel}
+			{...props}
+			data-ui-component="avatar"
+			data-ui-avatar-palette={paletteIndex(email)}
+			data-ui-avatar-size={size}
 		>
-			{initials(firstName, lastName, email)}
+			{src ? (
+				<img src={src} alt="" aria-hidden className={clsx("ui-AvatarImage", className)} />
+			) : (
+				getInitials(firstName, lastName, email)
+			)}
 		</span>
 	);
 }

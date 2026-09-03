@@ -1,11 +1,11 @@
-.card {
+.ui-Card {
 	border: 1px solid var(--color-line);
 	border-radius: var(--radius-card);
 	background-color: var(--color-surface);
 	box-shadow: var(--shadow-card);
 }
 
-.header {
+.ui-CardHeader {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
@@ -15,34 +15,36 @@
 	border-bottom: 1px solid var(--color-line);
 }
 
-.heading {
+.ui-CardHeading {
 	min-width: 0;
 }
 
-.title {
+.ui-CardTitle {
 	font-size: var(--text-base);
 	font-weight: var(--font-weight-semibold);
 	color: var(--color-ink);
 }
 
-.description {
+.ui-CardDescription {
 	margin-top: var(--space-1);
 	font-size: var(--text-sm);
 	color: var(--color-ink-muted);
 }
 
-.actions {
+.ui-CardActions {
 	display: flex;
 	flex-shrink: 0;
 	align-items: center;
 	gap: var(--space-2);
 }
 
-.body {
-	padding: var(--space-4) var(--space-5);
+.ui-CardBody {
+	&:where([data-ui-card-body-padded="true"]) {
+		padding: var(--space-4) var(--space-5);
+	}
 }
 
-.footer {
+.ui-CardFooter {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;

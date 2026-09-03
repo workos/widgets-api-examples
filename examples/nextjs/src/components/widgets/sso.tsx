@@ -36,8 +36,6 @@ import type {
 import { useResetDialogKey } from "@/lib/use-reset-dialog-key";
 import { getErrorMessage } from "@/lib/utils";
 
-import styles from "./sso.module.css";
-
 const STATE_TONE: Record<ConnectionState, BadgeTone> = {
 	Active: "positive",
 	Inactive: "neutral",
@@ -141,7 +139,7 @@ export function SsoWidgetImpl({ connections }: { connections: Connection[] }) {
 	);
 
 	return (
-		<div className={styles.stack}>
+		<div className="SsoStack">
 			<Card>
 				<CardHeader
 					title="SSO connections"
@@ -179,7 +177,7 @@ export function SsoWidgetImpl({ connections }: { connections: Connection[] }) {
 								<Th>Type</Th>
 								<Th>State</Th>
 								<Th>Setup</Th>
-								<Th className={styles.alignRight}>Actions</Th>
+								<Th className="SsoAlignRight">Actions</Th>
 							</tr>
 						</thead>
 						<tbody>
@@ -188,14 +186,14 @@ export function SsoWidgetImpl({ connections }: { connections: Connection[] }) {
 									<Td>
 										<button
 											type="button"
-											className={styles.nameButton}
+											className="SsoNameButton"
 											onClick={() => setDetailId(connection.id)}
 										>
 											{connection.name}
 										</button>
-										<p className={styles.connectionId}>{connection.id}</p>
+										<p className="SsoConnectionId">{connection.id}</p>
 									</Td>
-									<Td className={styles.mutedCell}>{humanizeConnectionType(connection.type)}</Td>
+									<Td className="SsoMutedCell">{humanizeConnectionType(connection.type)}</Td>
 									<Td>
 										<Badge tone={STATE_TONE[connection.state]}>{connection.state}</Badge>
 									</Td>
@@ -204,9 +202,9 @@ export function SsoWidgetImpl({ connections }: { connections: Connection[] }) {
 											{connection.setupComplete ? "Complete" : "Pending"}
 										</Badge>
 									</Td>
-									<Td className={styles.alignRight}>
-										<div className={styles.rowActions}>
-											<div className={styles.rowActionButtons}>
+									<Td className="SsoAlignRight">
+										<div className="SsoRowActions">
+											<div className="SsoRowActionButtons">
 												<Button
 													type="button"
 													size="sm"
@@ -254,9 +252,9 @@ export function SsoWidgetImpl({ connections }: { connections: Connection[] }) {
 					/>
 					<CardBody>
 						{detail.isPending ? (
-							<Skeleton className={styles.detailSkeleton} />
+							<Skeleton className="SsoDetailSkeleton" />
 						) : detail.data?.ssoConnection ? (
-							<dl className={styles.detailGrid}>
+							<dl className="SsoDetailGrid">
 								{(
 									[
 										["Name", detail.data.ssoConnection.name],
@@ -268,8 +266,8 @@ export function SsoWidgetImpl({ connections }: { connections: Connection[] }) {
 									] as const
 								).map(([label, value]) => (
 									<div key={label}>
-										<dt className={styles.detailLabel}>{label}</dt>
-										<dd className={styles.detailValue}>{value}</dd>
+										<dt className="SsoDetailLabel">{label}</dt>
+										<dd className="SsoDetailValue">{value}</dd>
 									</div>
 								))}
 							</dl>
@@ -347,7 +345,7 @@ function CreateDialog({
 				</>
 			}
 		>
-			<form id="sso-create" className={styles.form} onSubmit={handleSubmit}>
+			<form id="sso-create" className="SsoForm" onSubmit={handleSubmit}>
 				<FormField
 					name="type"
 					type="select"
@@ -418,7 +416,7 @@ function RenameDialog({
 		>
 			<form
 				id="sso-rename"
-				className={styles.form}
+				className="SsoForm"
 				onSubmit={(event) => {
 					event.preventDefault();
 					if (connection) {

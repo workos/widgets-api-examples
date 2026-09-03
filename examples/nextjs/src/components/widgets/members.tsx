@@ -43,8 +43,6 @@ import { useDebouncedValue } from "@/lib/use-debounced-value";
 import { useResetDialogKey } from "@/lib/use-reset-dialog-key";
 import { getErrorMessage } from "@/lib/utils";
 
-import styles from "./members.module.css";
-
 const STATUS_TONE: Record<OrganizationMemberStatus, BadgeTone> = {
 	Active: "positive",
 	Invited: "accent",
@@ -108,7 +106,7 @@ export function MembersWidgetImpl({ roles }: { roles: Role[] }) {
 	const list = members.data?.organizationMemberships;
 
 	return (
-		<div className={styles.widget}>
+		<div className="MembersWidget">
 			<Card>
 				<CardHeader
 					title="Organization members"
@@ -120,8 +118,8 @@ export function MembersWidgetImpl({ roles }: { roles: Role[] }) {
 					}
 				/>
 				<CardBody padded={false}>
-					<div className={styles.toolbar}>
-						<div className={styles.searchField}>
+					<div className="MembersToolbar">
+						<div className="MembersSearchField">
 							<FormField
 								type="search"
 								name="search-by-name"
@@ -169,7 +167,7 @@ export function MembersWidgetImpl({ roles }: { roles: Role[] }) {
 									<Th>Role</Th>
 									<Th>Status</Th>
 									<Th>Last active</Th>
-									<Th className={styles.actionsHeader}>Actions</Th>
+									<Th className="MembersActionsHeader">Actions</Th>
 								</tr>
 							</thead>
 							<tbody>
@@ -186,7 +184,7 @@ export function MembersWidgetImpl({ roles }: { roles: Role[] }) {
 					)}
 				</CardBody>
 				<CardFooter>
-					<div className={styles.pagination}>
+					<div className="MembersPagination">
 						<Button size="sm" disabled={!list?.listMetadata.before} onClick={() => setAfter(null)}>
 							First page
 						</Button>
@@ -284,7 +282,7 @@ function MemberRow({
 	return (
 		<Tr>
 			<Td>
-				<div className={styles.member}>
+				<div className="MembersMember">
 					<Avatar
 						size="sm"
 						email={member.email}
@@ -292,14 +290,14 @@ function MemberRow({
 						lastName={member.lastName}
 						src={member.profilePictureUrl}
 					/>
-					<div className={styles.memberText}>
-						<p className={styles.memberName}>{displayName(member)}</p>
-						<p className={styles.memberEmail}>{member.email}</p>
+					<div className="MembersMemberText">
+						<p className="MembersMemberName truncate">{displayName(member)}</p>
+						<p className="MembersMemberEmail truncate">{member.email}</p>
 					</div>
 				</div>
 			</Td>
 			<Td>
-				<div className={styles.roleCell}>
+				<div className="MembersRoleCell">
 					<FormField
 						disabled={pending || updateMutation.isPending}
 						type="select"
@@ -324,10 +322,10 @@ function MemberRow({
 			<Td>
 				<Badge tone={STATUS_TONE[member.status]}>{member.status}</Badge>
 			</Td>
-			<Td className={styles.lastActiveCell}>{relativeTime(member.lastActivityAt)}</Td>
-			<Td className={styles.actionsCell}>
-				<div className={styles.actions}>
-					<div className={styles.actionButtons}>
+			<Td className="MembersLastActiveCell">{relativeTime(member.lastActivityAt)}</Td>
+			<Td className="MembersActionsCell">
+				<div className="MembersActions">
+					<div className="MembersActionButtons">
 						{pending ? (
 							<>
 								<Button
@@ -442,7 +440,7 @@ function InviteDialog({
 				</>
 			}
 		>
-			<form id="invite-form" className={styles.form} onSubmit={handleSubmit}>
+			<form id="invite-form" className="MembersForm" onSubmit={handleSubmit}>
 				<FormField
 					type="email"
 					name="email"

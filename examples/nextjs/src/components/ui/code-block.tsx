@@ -3,8 +3,6 @@
 import * as React from "react";
 import clsx from "clsx";
 
-import styles from "./code-block.module.css";
-
 export function CodeBlock({
 	code,
 	className,
@@ -17,7 +15,8 @@ export function CodeBlock({
 }) {
 	return (
 		<pre
-			className={clsx(styles.pre, className)}
+			className={clsx("ui-CodeBlock", "scrollbar-slim", className)}
+			data-ui-component="code-block"
 			style={
 				maxHeight ? ({ "--code-block-max-height": maxHeight } as React.CSSProperties) : undefined
 			}
@@ -48,27 +47,27 @@ export function QueryDisclosure({
 	const documents = Array.isArray(document) ? document : [document];
 
 	return (
-		<div className={styles.disclosure}>
+		<div className="ui-QueryDisclosure" data-ui-component="query-disclosure">
 			<button
 				type="button"
 				onClick={() => setOpen((value) => !value)}
-				className={styles.toggle}
+				className="ui-QueryDisclosureToggle"
 				aria-expanded={open}
 			>
-				<span aria-hidden className={clsx(styles.chevron, open && styles.chevronOpen)}>
+				<span aria-hidden className="ui-QueryDisclosureChevron">
 					›
 				</span>
 				{label}
 			</button>
 
 			{open ? (
-				<div className={styles.panel}>
+				<div className="ui-QueryDisclosurePanel">
 					{documents.map((node, index) => (
 						<CodeBlock key={index} code={node.trim()} />
 					))}
 					{variables && Object.keys(variables).length > 0 ? (
 						<div>
-							<p className={styles.variablesLabel}>Variables</p>
+							<p className="ui-QueryDisclosureVariablesLabel">Variables</p>
 							<CodeBlock code={JSON.stringify(variables, null, 2)} maxHeight="12rem" />
 						</div>
 					) : null}

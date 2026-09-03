@@ -48,8 +48,6 @@ import {
 	overviewPermissionsVariables,
 } from "@/lib/graphql/page-queries";
 
-import styles from "./overview.module.css";
-
 export function OverviewWidgets({
 	auditRange,
 	auditWindowDays = AUDIT_WINDOW_DAYS,
@@ -173,8 +171,8 @@ export function OverviewWidgetsImpl({
 	const linkedDirectories = directories.filter((directory) => directory.state === "linked");
 
 	return (
-		<div className={styles.page}>
-			<div className={styles.statGrid}>
+		<div className="OverviewPage">
+			<div className="OverviewStatGrid">
 				<Stat
 					label="Members"
 					value={active.length}
@@ -197,14 +195,14 @@ export function OverviewWidgetsImpl({
 				/>
 			</div>
 
-			<div className={styles.split}>
-				<div className={styles.activityColumn}>
+			<div className="OverviewSplit">
+				<div className="OverviewActivityColumn">
 					<Card>
 						<CardHeader
 							title="Recent activity"
 							description={`Audit events from the last ${auditWindowDays} days.`}
 							actions={
-								<Link href="/audit-logs" className={styles.headerLink}>
+								<Link href="/audit-logs" className="OverviewHeaderLink">
 									View all
 								</Link>
 							}
@@ -221,11 +219,11 @@ export function OverviewWidgetsImpl({
 								<tbody>
 									{auditEvents.map((event) => (
 										<Tr key={event.id}>
-											<Td className={styles.activityCell}>
-												<p className={styles.activityAction}>{humanizeAction(event.action)}</p>
-												<p className={styles.activityActor}>{event.actor.name ?? event.actor.id}</p>
+											<Td className="OverviewActivityCell">
+												<p className="OverviewActivityAction">{humanizeAction(event.action)}</p>
+												<p className="OverviewActivityActor">{event.actor.name ?? event.actor.id}</p>
 											</Td>
-											<Td className={styles.activityTime}>{relativeTime(event.occurredAt)}</Td>
+											<Td className="OverviewActivityTime">{relativeTime(event.occurredAt)}</Td>
 										</Tr>
 									))}
 								</tbody>
@@ -234,34 +232,34 @@ export function OverviewWidgetsImpl({
 					</Card>
 				</div>
 
-				<div className={styles.sideColumn}>
+				<div className="OverviewSideColumn">
 					<Card>
 						<CardHeader
 							title="Your access"
 							description="Permissions granted by your role in this organization."
 						/>
-						<CardBody className={styles.accessBody}>
-							<div className={styles.identity}>
+						<CardBody className="OverviewAccessBody">
+							<div className="OverviewIdentity">
 								<Avatar
 									email={user.email}
 									firstName={user.firstName}
 									lastName={user.lastName}
 									src={user.profilePictureUrl}
 								/>
-								<div className={styles.identityText}>
-									<p className={styles.identityName}>{displayName(user)}</p>
-									<p className={styles.identityEmail}>{user.email}</p>
+								<div className="OverviewIdentityText">
+									<p className="OverviewIdentityName truncate">{displayName(user)}</p>
+									<p className="OverviewIdentityEmail truncate">{user.email}</p>
 								</div>
 							</div>
 
 							{permissionsError ? (
-								<p className={styles.permissionsNote}>
+								<p className="OverviewPermissionsNote">
 									Requires the <code>role:read</code> grant.
 								</p>
 							) : (
-								<div className={styles.permissionList}>
+								<div className="OverviewPermissionList">
 									{permissions?.map((permission) => (
-										<code key={permission.id} className={styles.permission}>
+										<code key={permission.id} className="OverviewPermission">
 											{permission.slug}
 										</code>
 									))}
@@ -273,11 +271,11 @@ export function OverviewWidgetsImpl({
 						<CardHeader title="Organization" />
 						<CardBody>
 							{organization ? (
-								<dl className={styles.detailList}>
+								<dl className="OverviewDetailList">
 									<Row label="Name" value={organization.name} />
 									<Row
 										label="ID"
-										value={<code className={styles.detailCode}>{organization.id}</code>}
+										value={<code className="OverviewDetailCode">{organization.id}</code>}
 									/>
 									<Row label="Created" value={formatDate(organization.createdAt)} />
 									<Row
@@ -310,7 +308,7 @@ export function OverviewWidgetsImpl({
 					title="Newest members"
 					description="The five most recently added people in this organization."
 					actions={
-						<Link href="/members" className={styles.headerLink}>
+						<Link href="/members" className="OverviewHeaderLink">
 							Manage members
 						</Link>
 					}
@@ -321,14 +319,14 @@ export function OverviewWidgetsImpl({
 							<Th>Member</Th>
 							<Th>Role</Th>
 							<Th>Status</Th>
-							<Th className={styles.lastActiveHeader}>Last active</Th>
+							<Th className="OverviewLastActiveHeader">Last active</Th>
 						</tr>
 					</thead>
 					<tbody>
 						{members.slice(0, 5).map((member) => (
 							<Tr key={member.id}>
 								<Td>
-									<div className={styles.member}>
+									<div className="OverviewMember">
 										<Avatar
 											size="sm"
 											email={member.email}
@@ -336,13 +334,13 @@ export function OverviewWidgetsImpl({
 											lastName={member.lastName}
 											src={member.profilePictureUrl}
 										/>
-										<div className={styles.memberText}>
-											<p className={styles.memberName}>{displayName(member)}</p>
-											<p className={styles.memberEmail}>{member.email}</p>
+										<div className="OverviewMemberText">
+											<p className="OverviewMemberName truncate">{displayName(member)}</p>
+											<p className="OverviewMemberEmail truncate">{member.email}</p>
 										</div>
 									</div>
 								</Td>
-								<Td className={styles.memberRoles}>
+								<Td className="OverviewMemberRoles">
 									{member.roles.map((role) => role.name).join(", ") || "—"}
 								</Td>
 								<Td>
@@ -350,7 +348,7 @@ export function OverviewWidgetsImpl({
 										{member.status}
 									</Badge>
 								</Td>
-								<Td className={styles.memberActivity}>{relativeTime(member.lastActivityAt)}</Td>
+								<Td className="OverviewMemberActivity">{relativeTime(member.lastActivityAt)}</Td>
 							</Tr>
 						))}
 					</tbody>
@@ -362,19 +360,19 @@ export function OverviewWidgetsImpl({
 
 function Stat({ label, value, hint }: { label: string; value: number; hint: string }) {
 	return (
-		<Card className={styles.stat}>
-			<p className={styles.statLabel}>{label}</p>
-			<p className={styles.statValue}>{value}</p>
-			<p className={styles.statHint}>{hint}</p>
+		<Card className="OverviewStat">
+			<p className="OverviewStatLabel">{label}</p>
+			<p className="OverviewStatValue">{value}</p>
+			<p className="OverviewStatHint">{hint}</p>
 		</Card>
 	);
 }
 
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
 	return (
-		<div className={styles.row}>
-			<dt className={styles.rowLabel}>{label}</dt>
-			<dd className={styles.rowValue}>{value}</dd>
+		<div className="OverviewRow">
+			<dt className="OverviewRowLabel">{label}</dt>
+			<dd className="OverviewRowValue">{value}</dd>
 		</div>
 	);
 }

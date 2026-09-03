@@ -17,7 +17,6 @@ import { ErrorBoundary } from "@/components/ui/error-boundary";
 import { FormField } from "@/components/ui/form-field";
 import { Table, Td, Th, Tr } from "@/components/ui/table";
 import { formatDateTime, humanizeAction, relativeTime } from "@/lib/format";
-import clsx from "clsx";
 import {
 	AUDIT_EVENT_QUERY,
 	AUDIT_EVENTS_QUERY,
@@ -35,8 +34,6 @@ import { isType, unionErrorMessage } from "@/lib/graphql/union";
 import { auditEventsVariables } from "@/lib/graphql/page-queries";
 import { useDebouncedValue } from "@/lib/use-debounced-value";
 import { getErrorMessage } from "@/lib/utils";
-
-import styles from "./audit-logs.module.css";
 
 export function AuditLogsWidget({
 	initialRange,
@@ -126,7 +123,7 @@ export function AuditLogsWidgetImpl({
 		exportState.status !== "create-pending" && exportState.status !== "create-started";
 
 	return (
-		<div className={styles.page}>
+		<div className="AuditLogsPage">
 			<Card>
 				<CardHeader
 					title="Audit events"
@@ -152,7 +149,7 @@ export function AuditLogsWidgetImpl({
 					}
 				/>
 				<CardBody padded={false}>
-					<div className={styles.filters}>
+					<div className="AuditLogsFilters">
 						<FormField
 							type="datetime-local"
 							name="rangeStart"
@@ -188,7 +185,7 @@ export function AuditLogsWidgetImpl({
 					</div>
 
 					{exportState.error ? (
-						<div className={styles.exportError}>
+						<div className="AuditLogsExportError">
 							<ErrorText>{exportState.error}</ErrorText>
 						</div>
 					) : null}
@@ -196,12 +193,12 @@ export function AuditLogsWidgetImpl({
 					{exportState.status === "create-pending" ||
 					exportState.status === "create-started" ||
 					exportState.status === "created" ? (
-						<div className={styles.exportStatus}>
+						<div className="AuditLogsExportStatus">
 							Export{" "}
 							{exportState.data?.id ? (
-								<code className={styles.exportId}>{exportState.data.id}</code>
+								<code className="AuditLogsExportId">{exportState.data.id}</code>
 							) : (
-								<Skeleton className={clsx(styles.exportIdSkeleton, styles.exportId)}>
+								<Skeleton className="AuditLogsExportIdSkeleton AuditLogsExportId">
 									audit_log_export_00000000000000
 								</Skeleton>
 							)}
@@ -211,7 +208,7 @@ export function AuditLogsWidgetImpl({
 								<Badge tone="caution">Pending</Badge>
 							)}
 							{exportState.data?.url ? (
-								<Button asChild size="sm" className={styles.exportDownload}>
+								<Button asChild size="sm" className="AuditLogsExportDownload">
 									<a href={exportState.data.url} download={`${exportState.data.id}.csv`}>
 										Download CSV
 									</a>
@@ -221,9 +218,9 @@ export function AuditLogsWidgetImpl({
 					) : null}
 
 					{events.isPending && !list ? (
-						<div className={styles.eventsSkeleton}>
+						<div className="AuditLogsEventsSkeleton">
 							{Array.from({ length: 6 }).map((_, i) => (
-								<Skeleton key={i} className={styles.eventsSkeletonRow} />
+								<Skeleton key={i} className="AuditLogsEventsSkeletonRow" />
 							))}
 						</div>
 					) : events.error ? (
@@ -237,7 +234,7 @@ export function AuditLogsWidgetImpl({
 									<Th>Action</Th>
 									<Th>Actor</Th>
 									<Th>Targets</Th>
-									<Th className={styles.whenHeader}>When</Th>
+									<Th className="AuditLogsWhenHeader">When</Th>
 								</tr>
 							</thead>
 							<tbody>
@@ -256,7 +253,7 @@ export function AuditLogsWidgetImpl({
 					)}
 				</CardBody>
 				<CardFooter>
-					<div className={styles.pagination}>
+					<div className="AuditLogsPagination">
 						<Button size="sm" disabled={!after} onClick={() => setAfter(null)}>
 							First page
 						</Button>
@@ -313,40 +310,40 @@ function EventDetailDialog({
 			}
 		>
 			{loading ? (
-				<Skeleton className={styles.detailSkeleton} />
+				<Skeleton className="AuditLogsDetailSkeleton" />
 			) : error ? (
 				<ErrorText>{error.message}</ErrorText>
 			) : event ? (
-				<div className={styles.detail}>
-					<dl className={styles.detailGrid}>
+				<div className="AuditLogsDetail">
+					<dl className="AuditLogsDetailGrid">
 						<div>
-							<dt className={styles.detailLabel}>Occurred</dt>
+							<dt className="AuditLogsDetailLabel">Occurred</dt>
 							<dd>{formatDateTime(event.occurredAt)}</dd>
 						</div>
 						<div>
-							<dt className={styles.detailLabel}>Actor</dt>
+							<dt className="AuditLogsDetailLabel">Actor</dt>
 							<dd>
 								{event.actor.name ?? event.actor.id}
-								<span className={styles.actorType}>({event.actor.type})</span>
+								<span className="AuditLogsActorType">({event.actor.type})</span>
 							</dd>
 						</div>
-						<div className={styles.detailWide}>
-							<dt className={styles.detailLabel}>Targets</dt>
-							<dd className={styles.targetList}>
+						<div className="AuditLogsDetailWide">
+							<dt className="AuditLogsDetailLabel">Targets</dt>
+							<dd className="AuditLogsTargetList">
 								{event.targets.map((target) => (
-									<code key={target} className={styles.target}>
+									<code key={target} className="AuditLogsTarget">
 										{target}
 									</code>
 								))}
 							</dd>
 						</div>
-						<div className={styles.detailWide}>
-							<dt className={styles.detailLabel}>ID</dt>
-							<dd className={styles.detailId}>{event.id}</dd>
+						<div className="AuditLogsDetailWide">
+							<dt className="AuditLogsDetailLabel">ID</dt>
+							<dd className="AuditLogsDetailId">{event.id}</dd>
 						</div>
 					</dl>
 					<div>
-						<p className={styles.dataLabel}>data</p>
+						<p className="AuditLogsDataLabel">data</p>
 						<CodeBlock code={JSON.stringify(event.data ?? {}, null, 2)} maxHeight="14rem" />
 					</div>
 				</div>
@@ -374,26 +371,26 @@ function EventRow({
 					onClick={onSelect}
 					onMouseEnter={onPrefetch}
 					onFocus={onPrefetch}
-					className={styles.actionButton}
+					className="AuditLogsActionButton"
 				>
 					{humanizeAction(event.action)}
 				</button>
-				<p className={styles.actionSlug}>{event.action}</p>
+				<p className="AuditLogsActionSlug">{event.action}</p>
 			</Td>
-			<Td className={styles.actorCell}>
+			<Td className="AuditLogsActorCell">
 				{event.actor.name ?? event.actor.id}
-				<p className={styles.actorTypeLine}>{event.actor.type}</p>
+				<p className="AuditLogsActorTypeLine">{event.actor.type}</p>
 			</Td>
 			<Td>
-				<div className={styles.targets}>
+				<div className="AuditLogsTargets">
 					{event.targets.slice(0, 2).map((target) => (
-						<code key={target} className={styles.targetTag}>
+						<code key={target} className="AuditLogsTargetTag">
 							{target}
 						</code>
 					))}
 				</div>
 			</Td>
-			<Td className={styles.whenCell}>{relativeTime(event.occurredAt)}</Td>
+			<Td className="AuditLogsWhenCell">{relativeTime(event.occurredAt)}</Td>
 		</Tr>
 	);
 }

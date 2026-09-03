@@ -3,8 +3,6 @@ import clsx from "clsx";
 import * as React from "react";
 import { useControllableState } from "@/lib/use-controllable-state";
 
-import styles from "./checkbox.module.css";
-
 interface CheckboxFieldContextValue {
 	name: string;
 	value: Set<string>;
@@ -98,7 +96,8 @@ function CheckboxGroup(props: CheckboxGroupProps) {
 			<fieldset
 				ref={forwardedRef}
 				id={id}
-				className={styles.group}
+				className="ui-CheckboxGroup"
+				data-ui-component="checkbox-group"
 				aria-label={ariaLabel}
 				aria-describedby={
 					[ariaDescribedby, hasInvalidText && invalidTextId, hasDescription && descriptionId]
@@ -106,15 +105,17 @@ function CheckboxGroup(props: CheckboxGroupProps) {
 						.join(" ") || undefined
 				}
 			>
-				<legend className={visuallyHideLabel ? styles.legendHidden : styles.legend}>{label}</legend>
-				<div className={styles.options}>{children}</div>
+				<legend className={clsx("ui-CheckboxGroupLegend", visuallyHideLabel && "sr-only")}>
+					{label}
+				</legend>
+				<div className="ui-CheckboxGroupOptions">{children}</div>
 				{hasInvalidText && (
-					<span className={styles.invalidText} color="red" id={invalidTextId}>
+					<span className="ui-CheckboxGroupInvalidText" color="red" id={invalidTextId}>
 						{invalidText}
 					</span>
 				)}
 				{hasDescription && (
-					<span className={styles.description} id={descriptionId}>
+					<span className="ui-CheckboxGroupDescription" id={descriptionId}>
 						{description}
 					</span>
 				)}
@@ -184,7 +185,7 @@ function Checkbox(props: CheckboxProps) {
 	}
 
 	return (
-		<div className={styles.checkbox}>
+		<div className="ui-Checkbox" data-ui-component="checkbox">
 			<input
 				type="checkbox"
 				ref={ref}
@@ -201,11 +202,9 @@ function Checkbox(props: CheckboxProps) {
 			{typeof label === "string" ? (
 				<label
 					htmlFor={id}
-					className={clsx(
-						styles.label,
-						labelVariant === "mono" && styles.labelMono,
-						disabled && styles.labelDisabled,
-					)}
+					className="ui-CheckboxLabel"
+					data-ui-checkbox-label-variant={labelVariant}
+					data-ui-checkbox-disabled={disabled || undefined}
 				>
 					{label}
 				</label>

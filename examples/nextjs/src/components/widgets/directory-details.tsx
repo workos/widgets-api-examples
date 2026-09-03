@@ -19,8 +19,6 @@ import type {
 } from "@/lib/graphql/types";
 import { directoryGroupsVariables, directoryUsersVariables } from "@/lib/graphql/page-queries";
 
-import styles from "./directory-details.module.css";
-
 export function DirectoryDetailsWidget({ directoryId }: { directoryId: string }) {
 	const directory = useQuery<DirectoryConnectionQueryResult>(DIRECTORY_CONNECTION_QUERY, {
 		variables: { id: directoryId },
@@ -74,7 +72,7 @@ export function DirectoryDetailsWidgetImpl({
 	const ready = usePageReady(users, groups);
 
 	return (
-		<div className={styles.stack}>
+		<div className="DirectoryDetailsStack">
 			<Card>
 				<CardHeader
 					title="Directory details"
@@ -82,12 +80,12 @@ export function DirectoryDetailsWidgetImpl({
 				/>
 			</Card>
 
-			<div className={styles.columns}>
+			<div className="DirectoryDetailsColumns">
 				<Card>
 					{users.isPending || !ready ? (
-						<CardBody className={styles.skeletonList}>
+						<CardBody className="DirectoryDetailsSkeletonList">
 							{Array.from({ length: 5 }).map((_, i) => (
-								<Skeleton key={i} className={styles.skeletonRow} />
+								<Skeleton key={i} className="DirectoryDetailsSkeletonRow" />
 							))}
 						</CardBody>
 					) : users.error ? (
@@ -100,21 +98,21 @@ export function DirectoryDetailsWidgetImpl({
 								<tr>
 									<Th>User</Th>
 									<Th>State</Th>
-									<Th className={styles.alignRight}>Updated</Th>
+									<Th className="DirectoryDetailsAlignRight">Updated</Th>
 								</tr>
 							</thead>
 							<tbody>
 								{users.data.directoryUsers.data.map((user) => (
 									<Tr key={user.id}>
 										<Td>
-											<p className={styles.userName}>
+											<p className="DirectoryDetailsUserName">
 												{displayName({
 													firstName: user.firstName,
 													lastName: user.lastName,
 													email: user.email ?? user.username ?? user.idpId,
 												})}
 											</p>
-											<p className={styles.userEmail}>{user.email ?? user.username}</p>
+											<p className="DirectoryDetailsUserEmail">{user.email ?? user.username}</p>
 										</Td>
 										<Td>
 											<Badge
@@ -129,7 +127,7 @@ export function DirectoryDetailsWidgetImpl({
 												{user.state}
 											</Badge>
 										</Td>
-										<Td className={styles.metaCell}>{formatDateTime(user.updatedAt)}</Td>
+										<Td className="DirectoryDetailsMetaCell">{formatDateTime(user.updatedAt)}</Td>
 									</Tr>
 								))}
 							</tbody>
@@ -140,9 +138,9 @@ export function DirectoryDetailsWidgetImpl({
 				<Card>
 					<CardHeader title="Directory groups" description={directoryConnection.name} />
 					{groups.isPending || !ready ? (
-						<CardBody className={styles.skeletonList}>
+						<CardBody className="DirectoryDetailsSkeletonList">
 							{Array.from({ length: 4 }).map((_, i) => (
-								<Skeleton key={i} className={styles.skeletonRow} />
+								<Skeleton key={i} className="DirectoryDetailsSkeletonRow" />
 							))}
 						</CardBody>
 					) : groups.error ? (
@@ -155,17 +153,17 @@ export function DirectoryDetailsWidgetImpl({
 								<tr>
 									<Th>Name</Th>
 									<Th>IdP ID</Th>
-									<Th className={styles.alignRight}>Created</Th>
+									<Th className="DirectoryDetailsAlignRight">Created</Th>
 								</tr>
 							</thead>
 							<tbody>
 								{groups.data.directoryGroups.data.map((group) => (
 									<Tr key={group.id}>
-										<Td className={styles.nameCell}>{group.name}</Td>
+										<Td className="DirectoryDetailsNameCell">{group.name}</Td>
 										<Td>
-											<code className={styles.idpId}>{group.idpId}</code>
+											<code className="DirectoryDetailsIdpId">{group.idpId}</code>
 										</Td>
-										<Td className={styles.metaCell}>{formatDateTime(group.createdAt)}</Td>
+										<Td className="DirectoryDetailsMetaCell">{formatDateTime(group.createdAt)}</Td>
 									</Tr>
 								))}
 							</tbody>

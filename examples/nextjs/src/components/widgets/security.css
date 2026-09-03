@@ -1,4 +1,4 @@
-.cards {
+.SecurityCards {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-6);
@@ -6,7 +6,7 @@
 
 /* Elevation panel ---------------------------------------------------------- */
 
-.elevation {
+.SecurityElevation {
 	padding: var(--space-4);
 	border: 1px solid var(--color-line);
 	border-radius: var(--radius-lg);
@@ -17,77 +17,77 @@
 	}
 }
 
-.elevationText {
+.SecurityElevationText {
 	font-size: var(--text-sm);
 	line-height: var(--text-sm-leading);
 	color: var(--color-ink-muted);
 }
 
-.elevationCode {
+.SecurityElevationCode {
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 }
 
-.codeMono {
+.SecurityCodeMono {
 	font-family: var(--font-mono);
 }
 
 /* Code-and-button rows shared by the elevation, MFA, and email flows. */
-.inlineForm {
+.SecurityInlineForm {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-end;
 	gap: var(--space-2);
 }
 
-.inlineFormField {
+.SecurityInlineFormField {
 	flex: 1 1 0%;
 	min-width: calc(var(--spacing) * 40);
 }
 
 /* Sessions ----------------------------------------------------------------- */
 
-.errorRow {
+.SecurityErrorRow {
 	padding: var(--space-3) var(--space-5);
 	border-bottom: 1px solid var(--color-line);
 }
 
-.actionsHeader {
+.SecurityActionsHeader {
 	text-align: right;
 }
 
-.device {
+.SecurityDevice {
 	display: flex;
 	align-items: center;
 	gap: var(--space-2);
 }
 
-.deviceName {
+.SecurityDeviceName {
 	font-weight: var(--font-weight-medium);
 }
 
-.deviceAddress {
+.SecurityDeviceAddress {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-subtle);
 }
 
-.locationCell {
+.SecurityLocationCell {
 	color: var(--color-ink-muted);
 }
 
-.timeCell {
+.SecurityTimeCell {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-subtle);
 }
 
-.actionsCell {
+.SecurityActionsCell {
 	text-align: right;
 }
 
-.revokeActions {
+.SecurityRevokeActions {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
@@ -96,7 +96,7 @@
 
 /* Passkeys ----------------------------------------------------------------- */
 
-.passkeyId {
+.SecurityPasskeyId {
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
@@ -105,28 +105,25 @@
 
 /* Password ----------------------------------------------------------------- */
 
-.modeToggle {
+.SecurityModeToggle {
 	display: flex;
 	padding: var(--space-0-5);
 	border: 1px solid var(--color-line);
 	border-radius: var(--radius-lg);
 }
 
-.modeButton {
+.SecurityModeButton {
 	padding: var(--space-1) var(--space-2-5);
 	border-radius: var(--radius-md);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	font-weight: var(--font-weight-medium);
-}
-
-.modeButtonActive {
-	background-color: var(--color-accent-soft);
-	color: var(--color-accent-ink);
-}
-
-.modeButtonInactive {
 	color: var(--color-ink-muted);
+
+	&:where([data-active]) {
+		background-color: var(--color-accent-soft);
+		color: var(--color-accent-ink);
+	}
 }
 
 /*
@@ -134,13 +131,13 @@
  * rather than flex, so inline-level children (buttons) keep their intrinsic
  * width.
  */
-.cardStack {
+.SecurityCardStack {
 	& > * + * {
 		margin-top: var(--space-4);
 	}
 }
 
-.fieldStack {
+.SecurityFieldStack {
 	& > * + * {
 		margin-top: var(--space-3);
 	}
@@ -148,33 +145,33 @@
 
 /* Authenticator app -------------------------------------------------------- */
 
-.qrCode {
+.SecurityQrCode {
 	width: calc(var(--spacing) * 40);
 	height: calc(var(--spacing) * 40);
 	border: 1px solid var(--color-line);
 	border-radius: var(--radius-lg);
 }
 
-.secret {
+.SecuritySecret {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.secretValue {
+.SecuritySecretValue {
 	font-family: var(--font-mono);
 	color: var(--color-ink);
 }
 
 /* Change email ------------------------------------------------------------- */
 
-.currentEmail {
+.SecurityCurrentEmail {
 	font-size: var(--text-sm);
 	line-height: var(--text-sm-leading);
 	color: var(--color-ink-muted);
 }
 
-.currentEmailValue {
+.SecurityCurrentEmailValue {
 	font-weight: var(--font-weight-medium);
 	color: var(--color-ink);
 }

@@ -160,7 +160,7 @@ textarea {
 	outline-offset: 2px;
 }
 
-/* Keyframes are declared globally so CSS modules can reference them by name. */
+/* Keyframes are declared globally so any stylesheet can reference them by name. */
 @keyframes spin {
 	to {
 		transform: rotate(360deg);

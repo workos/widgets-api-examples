@@ -13,3 +13,16 @@ export const media = {
 	lgDown: "(max-width: 63.999rem)",
 	xlDown: "(max-width: 79.999rem)",
 } as const;
+
+export const Breakpoint = {
+	Sm: "sm",
+	Md: "md",
+	Lg: "lg",
+	Xl: "xl",
+	SmDown: "smDown",
+	MdDown: "mdDown",
+	LgDown: "lgDown",
+	XlDown: "xlDown",
+} as const;
+
+export type Breakpoint = keyof typeof media;

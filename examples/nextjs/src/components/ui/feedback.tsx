@@ -1,25 +1,30 @@
 import * as React from "react";
 import clsx from "clsx";
-import styles from "./feedback.module.css";
 
 export function Skeleton({
 	className,
 	...props
 }: { className?: string; children?: React.ReactNode } & React.HTMLAttributes<HTMLDivElement>) {
-	return <div className={clsx(styles.skeleton, className)} aria-hidden {...props} />;
+	return (
+		<div
+			className={clsx("ui-Skeleton", className)}
+			aria-hidden
+			data-ui-component="skeleton"
+			{...props}
+		/>
+	);
 }
 
 export function TableSkeleton({ rows = 5, columns = 4 }: { rows?: number; columns?: number }) {
 	return (
-		<div className={styles.tableSkeleton}>
+		<div className="ui-TableSkeleton" data-ui-component="table-skeleton">
 			{Array.from({ length: rows }).map((_, rowIndex) => (
-				<div key={rowIndex} className={styles.tableSkeletonRow}>
+				<div key={rowIndex} className="ui-TableSkeletonRow">
 					{Array.from({ length: columns }).map((__, columnIndex) => (
 						<Skeleton
 							key={columnIndex}
-							className={
-								columnIndex === 0 ? styles.tableSkeletonCellFirst : styles.tableSkeletonCell
-							}
+							className="ui-TableSkeletonCell"
+							data-ui-table-skeleton-cell={columnIndex === 0 ? "first" : undefined}
 						/>
 					))}
 				</div>
@@ -31,16 +36,21 @@ export function TableSkeleton({ rows = 5, columns = 4 }: { rows?: number; column
 /** Full-page placeholder shown until every primary query on a page has settled. */
 export function PageSkeleton() {
 	return (
-		<div className={styles.pageSkeleton} aria-busy="true" aria-label="Loading page">
-			<div className={styles.pageSkeletonStats}>
+		<div
+			className="ui-PageSkeleton"
+			aria-busy="true"
+			aria-label="Loading page"
+			data-ui-component="page-skeleton"
+		>
+			<div className="ui-PageSkeletonStats">
 				{Array.from({ length: 4 }).map((_, index) => (
-					<Skeleton key={index} className={styles.pageSkeletonStat} />
+					<Skeleton key={index} className="ui-PageSkeletonStat" />
 				))}
 			</div>
-			<Skeleton className={styles.pageSkeletonTable} />
-			<div className={styles.pageSkeletonSplit}>
-				<Skeleton className={styles.pageSkeletonPanel} />
-				<Skeleton className={styles.pageSkeletonPanel} />
+			<Skeleton className="ui-PageSkeletonTable" />
+			<div className="ui-PageSkeletonSplit">
+				<Skeleton className="ui-PageSkeletonPanel" />
+				<Skeleton className="ui-PageSkeletonPanel" />
 			</div>
 		</div>
 	);
@@ -56,22 +66,15 @@ export function EmptyState({
 	action?: React.ReactNode;
 }) {
 	return (
-		<div className={styles.emptyState}>
-			<p className={styles.emptyStateTitle}>{title}</p>
-			{description ? <p className={styles.emptyStateDescription}>{description}</p> : null}
-			{action ? <div className={styles.emptyStateAction}>{action}</div> : null}
+		<div className="ui-EmptyState" data-ui-component="empty-state">
+			<p className="ui-EmptyStateTitle">{title}</p>
+			{description ? <p className="ui-EmptyStateDescription">{description}</p> : null}
+			{action ? <div className="ui-EmptyStateAction">{action}</div> : null}
 		</div>
 	);
 }
 
 export type NoticeTone = "info" | "positive" | "caution" | "critical";
-
-const NOTICE_TONES: Record<NoticeTone, string> = {
-	info: styles.info,
-	positive: styles.positive,
-	caution: styles.caution,
-	critical: styles.critical,
-};
 
 export function Notice({
 	tone = "info",
@@ -85,10 +88,14 @@ export function Notice({
 	className?: string;
 }) {
 	return (
-		<div className={clsx(styles.notice, NOTICE_TONES[tone], className)}>
-			{title ? <p className={styles.noticeTitle}>{title}</p> : null}
+		<div
+			className={clsx("ui-Notice", className)}
+			data-ui-component="notice"
+			data-ui-notice-tone={tone}
+		>
+			{title ? <p className="ui-NoticeTitle">{title}</p> : null}
 			{children ? (
-				<div className={clsx(styles.noticeBody, title && styles.noticeBodyWithTitle)}>
+				<div className="ui-NoticeBody" data-ui-notice-body-titled={title ? "" : undefined}>
 					{children}
 				</div>
 			) : null}
@@ -101,5 +108,9 @@ export function Notice({
  * mutations never throw for expected failures, they return a typed member.
  */
 export function ErrorText({ children }: { children: React.ReactNode }) {
-	return <p className={styles.errorText}>{children}</p>;
+	return (
+		<p className="ui-ErrorText" data-ui-component="error-text">
+			{children}
+		</p>
+	);
 }

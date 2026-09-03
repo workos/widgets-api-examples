@@ -22,8 +22,6 @@ import type { MeQueryResult, UpdateProfileMutationResult, User } from "@/lib/gra
 import { unionErrorMessage } from "@/lib/graphql/union";
 import { getErrorMessage } from "@/lib/utils";
 
-import styles from "./profile.module.css";
-
 export function ProfileWidget() {
 	const me = useQuery<MeQueryResult>(ME_QUERY);
 	if (me.isPending) {
@@ -118,11 +116,11 @@ export function ProfileWidgetImpl({ user }: { user: User }) {
 	}
 
 	return (
-		<div className={styles.layout}>
+		<div className="ProfileLayout">
 			<Card>
 				<CardHeader title="User profile" />
-				<CardBody className={styles.profileBody}>
-					<div className={styles.identity}>
+				<CardBody className="ProfileProfileBody">
+					<div className="ProfileIdentity">
 						<Avatar
 							size="lg"
 							email={user.email}
@@ -131,11 +129,11 @@ export function ProfileWidgetImpl({ user }: { user: User }) {
 							src={user.profilePictureUrl}
 						/>
 						<div>
-							<p className={styles.name}>{displayName(user)}</p>
-							<p className={styles.email}>{user.email}</p>
+							<p className="ProfileName">{displayName(user)}</p>
+							<p className="ProfileEmail">{user.email}</p>
 						</div>
 					</div>
-					<dl className={styles.details}>
+					<dl className="ProfileDetails">
 						<Row
 							label="Email verified"
 							value={
@@ -155,17 +153,17 @@ export function ProfileWidgetImpl({ user }: { user: User }) {
 						<Row label="MFA last used" value={relativeTime(user.mfaLastUsedAt)} />
 						<Row label="Created" value={formatDateTime(user.createdAt)} />
 						<Row label="Updated" value={formatDateTime(user.updatedAt)} />
-						<Row label="User ID" value={<code className={styles.userId}>{user.id}</code>} />
+						<Row label="User ID" value={<code className="ProfileUserId">{user.id}</code>} />
 					</dl>
 				</CardBody>
 			</Card>
 
-			<div className={styles.column}>
+			<div className="ProfileColumn">
 				<Card>
 					<CardHeader title="Update profile" />
 					<CardBody>
-						<form className={styles.form} onSubmit={handleSubmit}>
-							<div className={styles.nameFields}>
+						<form className="ProfileForm" onSubmit={handleSubmit}>
+							<div className="ProfileNameFields">
 								<FormField
 									name="first-name"
 									label="First name"
@@ -198,19 +196,19 @@ export function ProfileWidgetImpl({ user }: { user: User }) {
 						title="Connected accounts"
 						description={`OAuth profiles linked to ${displayName(user)}.`}
 					/>
-					<CardBody className={styles.accounts}>
+					<CardBody className="ProfileAccounts">
 						{user.connectedAccounts.length === 0 ? (
-							<p className={styles.accountsEmpty}>No connected accounts.</p>
+							<p className="ProfileAccountsEmpty">No connected accounts.</p>
 						) : (
 							user.connectedAccounts.map((account) => (
-								<div key={account.id} className={styles.account}>
+								<div key={account.id} className="ProfileAccount">
 									<div>
-										<p className={styles.accountProvider}>{account.provider}</p>
-										<p className={styles.accountEmail}>
+										<p className="ProfileAccountProvider">{account.provider}</p>
+										<p className="ProfileAccountEmail">
 											{account.email ?? "No email from provider"}
 										</p>
 									</div>
-									<p className={styles.accountTime}>{relativeTime(account.lastLoginAt)}</p>
+									<p className="ProfileAccountTime">{relativeTime(account.lastLoginAt)}</p>
 								</div>
 							))
 						)}
@@ -223,9 +221,9 @@ export function ProfileWidgetImpl({ user }: { user: User }) {
 
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
 	return (
-		<div className={styles.row}>
-			<dt className={styles.rowLabel}>{label}</dt>
-			<dd className={styles.rowValue}>{value}</dd>
+		<div className="ProfileRow">
+			<dt className="ProfileRowLabel">{label}</dt>
+			<dd className="ProfileRowValue">{value}</dd>
 		</div>
 	);
 }

@@ -1,4 +1,4 @@
-.widget {
+.MembersWidget {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-6);
@@ -6,7 +6,7 @@
 
 /* Toolbar ------------------------------------------------------------------ */
 
-.toolbar {
+.MembersToolbar {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -15,7 +15,7 @@
 	border-bottom: 1px solid var(--color-line);
 }
 
-.searchField {
+.MembersSearchField {
 	position: relative;
 	flex: 1 1 0%;
 	min-width: calc(var(--spacing) * 56);
@@ -23,56 +23,54 @@
 
 /* Table -------------------------------------------------------------------- */
 
-.actionsHeader {
+.MembersActionsHeader {
 	text-align: right;
 }
 
-.member {
+.MembersMember {
 	display: flex;
 	align-items: center;
 	gap: var(--space-2-5);
 }
 
-.memberText {
+.MembersMemberText {
 	min-width: 0;
 }
 
-.memberName {
-	composes: truncate from "../../styles/shared.module.css";
+.MembersMemberName {
 	font-weight: var(--font-weight-medium);
 }
 
-.memberEmail {
-	composes: truncate from "../../styles/shared.module.css";
+.MembersMemberEmail {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.roleCell {
+.MembersRoleCell {
 	width: auto;
 	min-width: calc(var(--spacing) * 32);
 	padding-block: var(--space-1-5);
 }
 
-.lastActiveCell {
+.MembersLastActiveCell {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-subtle);
 }
 
-.actionsCell {
+.MembersActionsCell {
 	text-align: right;
 }
 
-.actions {
+.MembersActions {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
 	gap: var(--space-1);
 }
 
-.actionButtons {
+.MembersActionButtons {
 	display: flex;
 	justify-content: flex-end;
 	gap: var(--space-1);
@@ -80,7 +78,7 @@
 
 /* Pagination --------------------------------------------------------------- */
 
-.pagination {
+.MembersPagination {
 	display: flex;
 	align-items: center;
 	gap: var(--space-2);
@@ -88,7 +86,7 @@
 
 /* Invite dialog ------------------------------------------------------------ */
 
-.form {
+.MembersForm {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-4);

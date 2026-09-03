@@ -1,7 +1,7 @@
 /**
  * Breakpoints are inlined into every stylesheet by
- * `@csstools/postcss-global-data`, so they can be used from any `.css` or
- * `.module.css` file without an import. This file itself is never bundled, so
+ * `@csstools/postcss-global-data`, so they can be used from any `.css`
+ * file without an import. This file itself is never bundled, so
  * it should only declare custom media queries.
  *
  *   - sm   40rem   640px

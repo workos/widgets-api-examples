@@ -1,4 +1,4 @@
-.root {
+.SetupRequired {
 	display: flex;
 	min-height: 100dvh;
 	max-width: 42rem;
@@ -9,7 +9,7 @@
 	padding: var(--space-16) var(--space-6);
 }
 
-.eyebrow {
+.SetupRequiredEyebrow {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	font-weight: var(--font-weight-semibold);
@@ -17,7 +17,7 @@
 	color: var(--color-accent-ink);
 }
 
-.title {
+.SetupRequiredTitle {
 	margin-top: var(--space-1-5);
 	font-size: var(--text-2xl);
 	line-height: var(--text-2xl-leading);
@@ -26,20 +26,20 @@
 	color: var(--color-ink);
 }
 
-.lede {
+.SetupRequiredLede {
 	margin-top: var(--space-2);
 	font-size: var(--text-sm);
 	line-height: var(--text-sm-leading);
 	color: var(--color-ink-muted);
 }
 
-.message {
+.SetupRequiredMessage {
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	line-height: var(--leading-relaxed);
 }
 
-.section {
+.SetupRequiredSection {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-2);
@@ -48,14 +48,14 @@
 	color: var(--color-ink-muted);
 }
 
-.sectionTitle {
+.SetupRequiredSectionTitle {
 	font-weight: var(--font-weight-medium);
 	color: var(--color-ink);
 }
 
 /* Kept block-level so the list markers render. */
-.orderedList,
-.unorderedList {
+.SetupRequiredOrderedList,
+.SetupRequiredUnorderedList {
 	padding-left: var(--space-5);
 
 	& > * + * {
@@ -63,19 +63,19 @@
 	}
 }
 
-.orderedList {
+.SetupRequiredOrderedList {
 	list-style: decimal;
 }
 
-.unorderedList {
+.SetupRequiredUnorderedList {
 	list-style: disc;
 }
 
-.code {
+.SetupRequiredCode {
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 }
 
-.demoHint {
+.SetupRequiredDemoHint {
 	padding-top: var(--space-1);
 }

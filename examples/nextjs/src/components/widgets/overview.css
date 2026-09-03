@@ -1,4 +1,4 @@
-.page {
+.OverviewPage {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-6);
@@ -6,7 +6,7 @@
 
 /* Stat cards --------------------------------------------------------------- */
 
-.statGrid {
+.OverviewStatGrid {
 	display: grid;
 	gap: var(--space-4);
 
@@ -19,11 +19,11 @@
 	}
 }
 
-.stat {
+.OverviewStat {
 	padding: var(--space-5);
 }
 
-.statLabel {
+.OverviewStatLabel {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	font-weight: var(--font-weight-medium);
@@ -31,7 +31,7 @@
 	color: var(--color-ink-subtle);
 }
 
-.statValue {
+.OverviewStatValue {
 	margin-top: var(--space-1);
 	font-size: var(--text-3xl);
 	line-height: var(--text-3xl-leading);
@@ -40,7 +40,7 @@
 	color: var(--color-ink);
 }
 
-.statHint {
+.OverviewStatHint {
 	margin-top: var(--space-1);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
@@ -49,7 +49,7 @@
 
 /* Two-column split --------------------------------------------------------- */
 
-.split {
+.OverviewSplit {
 	display: grid;
 	gap: var(--space-6);
 
@@ -58,7 +58,7 @@
 	}
 }
 
-.activityColumn {
+.OverviewActivityColumn {
 	@media (--md) {
 		grid-column: span 3 / span 3;
 	}
@@ -68,7 +68,7 @@
 	}
 }
 
-.sideColumn {
+.OverviewSideColumn {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-6);
@@ -82,7 +82,7 @@
 	}
 }
 
-.headerLink {
+.OverviewHeaderLink {
 	font-size: var(--text-13);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-accent-ink);
@@ -94,22 +94,22 @@
 
 /* Recent activity ---------------------------------------------------------- */
 
-.activityCell {
+.OverviewActivityCell {
 	width: 100%;
 }
 
-.activityAction {
+.OverviewActivityAction {
 	font-weight: var(--font-weight-medium);
 	color: var(--color-ink);
 }
 
-.activityActor {
+.OverviewActivityActor {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.activityTime {
+.OverviewActivityTime {
 	white-space: nowrap;
 	text-align: right;
 	font-size: var(--text-xs);
@@ -119,50 +119,48 @@
 
 /* Your access -------------------------------------------------------------- */
 
-.accessBody {
+.OverviewAccessBody {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-3);
 }
 
-.identity {
+.OverviewIdentity {
 	display: flex;
 	align-items: center;
 	gap: var(--space-3);
 }
 
-.identityText {
+.OverviewIdentityText {
 	min-width: 0;
 }
 
-.identityName {
-	composes: truncate from "../../styles/shared.module.css";
+.OverviewIdentityName {
 	font-size: var(--text-sm);
 	line-height: var(--text-sm-leading);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-ink);
 }
 
-.identityEmail {
-	composes: truncate from "../../styles/shared.module.css";
+.OverviewIdentityEmail {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.permissionsNote {
+.OverviewPermissionsNote {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.permissionList {
+.OverviewPermissionList {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-1-5);
 }
 
-.permission {
+.OverviewPermission {
 	border: 1px solid var(--color-line);
 	border-radius: var(--radius-md);
 	background-color: var(--color-raised);
@@ -174,7 +172,7 @@
 
 /* Organization ------------------------------------------------------------- */
 
-.detailList {
+.OverviewDetailList {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-2-5);
@@ -182,25 +180,25 @@
 	line-height: var(--text-sm-leading);
 }
 
-.detailCode {
+.OverviewDetailCode {
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.row {
+.OverviewRow {
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;
 	gap: var(--space-4);
 }
 
-.rowLabel {
+.OverviewRowLabel {
 	color: var(--color-ink-muted);
 }
 
-.rowValue {
+.OverviewRowValue {
 	min-width: 0;
 	text-align: right;
 	font-weight: var(--font-weight-medium);
@@ -209,37 +207,35 @@
 
 /* Newest members ----------------------------------------------------------- */
 
-.lastActiveHeader {
+.OverviewLastActiveHeader {
 	text-align: right;
 }
 
-.member {
+.OverviewMember {
 	display: flex;
 	align-items: center;
 	gap: var(--space-2-5);
 }
 
-.memberText {
+.OverviewMemberText {
 	min-width: 0;
 }
 
-.memberName {
-	composes: truncate from "../../styles/shared.module.css";
+.OverviewMemberName {
 	font-weight: var(--font-weight-medium);
 }
 
-.memberEmail {
-	composes: truncate from "../../styles/shared.module.css";
+.OverviewMemberEmail {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.memberRoles {
+.OverviewMemberRoles {
 	color: var(--color-ink-muted);
 }
 
-.memberActivity {
+.OverviewMemberActivity {
 	text-align: right;
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);

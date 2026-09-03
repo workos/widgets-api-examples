@@ -1,10 +1,12 @@
 import * as React from "react";
 import clsx from "clsx";
 
-import styles from "./card.module.css";
-
 export function Card({ children, className }: { children: React.ReactNode; className?: string }) {
-	return <section className={clsx(styles.card, className)}>{children}</section>;
+	return (
+		<section className={clsx("ui-Card", className)} data-ui-component="card">
+			{children}
+		</section>
+	);
 }
 
 export function CardHeader({
@@ -19,12 +21,12 @@ export function CardHeader({
 	className?: string;
 }) {
 	return (
-		<header className={clsx(styles.header, className)}>
-			<div className={styles.heading}>
-				<h2 className={styles.title}>{title}</h2>
-				{description ? <p className={styles.description}>{description}</p> : null}
+		<header className={clsx("ui-CardHeader", className)} data-ui-component="card-header">
+			<div className="ui-CardHeading">
+				<h2 className="ui-CardTitle">{title}</h2>
+				{description ? <p className="ui-CardDescription">{description}</p> : null}
 			</div>
-			{actions ? <div className={styles.actions}>{actions}</div> : null}
+			{actions ? <div className="ui-CardActions">{actions}</div> : null}
 		</header>
 	);
 }
@@ -38,7 +40,15 @@ export function CardBody({
 	className?: string;
 	padded?: boolean;
 }) {
-	return <div className={clsx(padded && styles.body, className)}>{children}</div>;
+	return (
+		<div
+			className={clsx("ui-CardBody", className)}
+			data-ui-component="card-body"
+			data-ui-card-body-padded={padded}
+		>
+			{children}
+		</div>
+	);
 }
 
 export function CardFooter({
@@ -48,5 +58,9 @@ export function CardFooter({
 	children: React.ReactNode;
 	className?: string;
 }) {
-	return <footer className={clsx(styles.footer, className)}>{children}</footer>;
+	return (
+		<footer className={clsx("ui-CardFooter", className)} data-ui-component="card-footer">
+			{children}
+		</footer>
+	);
 }

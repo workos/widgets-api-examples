@@ -1,12 +1,12 @@
 import * as React from "react";
 import clsx from "clsx";
 
-import styles from "./table.module.css";
-
 export function Table({ children, className }: { children: React.ReactNode; className?: string }) {
 	return (
-		<div className={styles.scroller}>
-			<table className={clsx(styles.table, className)}>{children}</table>
+		<div className="ui-TableScroller scrollbar-slim" data-ui-component="table-scroller">
+			<table className={clsx("ui-Table", className)} data-ui-component="table">
+				{children}
+			</table>
 		</div>
 	);
 }
@@ -17,7 +17,7 @@ export function Th({
 	...props
 }: React.ThHTMLAttributes<HTMLTableCellElement> & { children?: React.ReactNode }) {
 	return (
-		<th {...props} className={clsx(styles.th, className)}>
+		<th {...props} className={clsx("ui-Th", className)} data-ui-component="th">
 			{children}
 		</th>
 	);
@@ -29,7 +29,7 @@ export function Td({
 	...props
 }: React.TdHTMLAttributes<HTMLTableCellElement> & { children?: React.ReactNode }) {
 	return (
-		<td {...props} className={clsx(styles.td, className)}>
+		<td {...props} className={clsx("ui-Td", className)} data-ui-component="td">
 			{children}
 		</td>
 	);
@@ -44,5 +44,13 @@ export function Tr({
 	className?: string;
 	dim?: boolean;
 }) {
-	return <tr className={clsx(styles.tr, dim && styles.trDim, className)}>{children}</tr>;
+	return (
+		<tr
+			className={clsx("ui-Tr", className)}
+			data-ui-component="tr"
+			data-ui-table-row-dim={dim || undefined}
+		>
+			{children}
+		</tr>
+	);
 }

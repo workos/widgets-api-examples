@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import clsx from "clsx";
 import {
 	useGraphqlMutation as useMutation,
 	useGraphqlQuery as useQuery,
@@ -55,8 +54,6 @@ import type {
 } from "@/lib/graphql/types";
 import { isType, unionErrorMessage } from "@/lib/graphql/union";
 import { getErrorMessage } from "@/lib/utils";
-
-import styles from "./security.module.css";
 
 /**
  * Shared elevated-access flow: sendVerificationCode → verifyCurrentEmail.
@@ -146,15 +143,15 @@ function ElevationPanel({
 	}
 
 	return (
-		<div className={styles.elevation}>
-			<p className={styles.elevationText}>
+		<div className="SecurityElevation">
+			<p className="SecurityElevationText">
 				Sensitive changes require re-authentication via email code (
-				<code className={styles.elevationCode}>sendVerificationCode</code> →{" "}
-				<code className={styles.elevationCode}>verifyCurrentEmail</code>).
+				<code className="SecurityElevationCode">sendVerificationCode</code> →{" "}
+				<code className="SecurityElevationCode">verifyCurrentEmail</code>).
 			</p>
 			{demo ? (
 				<Notice tone="info" title="Demo mode">
-					Use verification code <code className={styles.codeMono}>{DEMO_VERIFICATION_CODE}</code>
+					Use verification code <code className="SecurityCodeMono">{DEMO_VERIFICATION_CODE}</code>
 				</Notice>
 			) : null}
 			{!elevation.challengeId ? (
@@ -162,8 +159,8 @@ function ElevationPanel({
 					Send verification code
 				</Button>
 			) : (
-				<div className={styles.inlineForm}>
-					<div className={styles.inlineFormField}>
+				<div className="SecurityInlineForm">
+					<div className="SecurityInlineFormField">
 						<FormField
 							name="code"
 							label="Code"
@@ -247,7 +244,7 @@ export function SecurityWidgetImpl({
 	user: User;
 }) {
 	return (
-		<div className={styles.cards}>
+		<div className="SecurityCards">
 			<SessionsCard sessions={sessions} />
 			<PasskeysCard passkeys={passkeys} />
 			<PasswordCard />
@@ -298,7 +295,7 @@ function SessionsCard({ sessions }: { sessions: Session[] }) {
 				}
 			/>
 			{revokeAllError ? (
-				<div className={styles.errorRow}>
+				<div className="SecurityErrorRow">
 					<ErrorText>{revokeAllError}</ErrorText>
 				</div>
 			) : null}
@@ -308,7 +305,7 @@ function SessionsCard({ sessions }: { sessions: Session[] }) {
 						<Th>Device</Th>
 						<Th>Location</Th>
 						<Th>Last active</Th>
-						<Th className={styles.actionsHeader}>Actions</Th>
+						<Th className="SecurityActionsHeader">Actions</Th>
 					</tr>
 				</thead>
 				<tbody>
@@ -339,21 +336,21 @@ function SessionRow({ session }: { session: Session }) {
 	return (
 		<Tr>
 			<Td>
-				<div className={styles.device}>
-					<span className={styles.deviceName}>{describeDevice(session.userAgent)}</span>
+				<div className="SecurityDevice">
+					<span className="SecurityDeviceName">{describeDevice(session.userAgent)}</span>
 					{session.isCurrent ? <Badge tone="accent">Current</Badge> : null}
 				</div>
-				<p className={styles.deviceAddress}>{session.ipAddress ?? "—"}</p>
+				<p className="SecurityDeviceAddress">{session.ipAddress ?? "—"}</p>
 			</Td>
-			<Td className={styles.locationCell}>
+			<Td className="SecurityLocationCell">
 				{session.currentLocation
 					? `${session.currentLocation.cityName}, ${session.currentLocation.countryISOCode}`
 					: "—"}
 			</Td>
-			<Td className={styles.timeCell}>{relativeTime(session.lastActivityAt)}</Td>
-			<Td className={styles.actionsCell}>
+			<Td className="SecurityTimeCell">{relativeTime(session.lastActivityAt)}</Td>
+			<Td className="SecurityActionsCell">
 				{!session.isCurrent ? (
-					<div className={styles.revokeActions}>
+					<div className="SecurityRevokeActions">
 						<Button
 							size="sm"
 							variant="ghost"
@@ -397,10 +394,10 @@ function PasskeysCard({ passkeys }: { passkeys: Passkey[] }) {
 						{passkeys.map((passkey) => (
 							<Tr key={passkey.id}>
 								<Td>
-									<code className={styles.passkeyId}>{passkey.id}</code>
+									<code className="SecurityPasskeyId">{passkey.id}</code>
 								</Td>
-								<Td className={styles.timeCell}>{formatDateTime(passkey.createdAt)}</Td>
-								<Td className={styles.timeCell}>{relativeTime(passkey.lastVerifiedAt)}</Td>
+								<Td className="SecurityTimeCell">{formatDateTime(passkey.createdAt)}</Td>
+								<Td className="SecurityTimeCell">{relativeTime(passkey.lastVerifiedAt)}</Td>
 							</Tr>
 						))}
 					</tbody>
@@ -469,23 +466,19 @@ function PasswordCard() {
 				title="Password"
 				description="Update an existing password, or create one after verifying identity (e.g. OAuth-only accounts)."
 				actions={
-					<div className={styles.modeToggle}>
+					<div className="SecurityModeToggle">
 						<button
 							type="button"
-							className={clsx(
-								styles.modeButton,
-								mode === "update" ? styles.modeButtonActive : styles.modeButtonInactive,
-							)}
+							className="SecurityModeButton"
+							data-active={mode === "update" || undefined}
 							onClick={() => setMode("update")}
 						>
 							Update
 						</button>
 						<button
 							type="button"
-							className={clsx(
-								styles.modeButton,
-								mode === "create" ? styles.modeButtonActive : styles.modeButtonInactive,
-							)}
+							className="SecurityModeButton"
+							data-active={mode === "create" || undefined}
 							onClick={() => setMode("create")}
 						>
 							Create
@@ -493,19 +486,19 @@ function PasswordCard() {
 					</div>
 				}
 			/>
-			<CardBody className={styles.cardStack}>
+			<CardBody className="SecurityCardStack">
 				{mode === "create" ? (
 					<ElevationPanel elevation={elevation} purpose="creating a password" />
 				) : null}
 
 				{getAppMode() === "demo" && mode === "update" ? (
 					<Notice tone="info" title="Demo current password">
-						<code className={styles.codeMono}>correct-horse-battery-staple</code>
+						<code className="SecurityCodeMono">correct-horse-battery-staple</code>
 					</Notice>
 				) : null}
 
 				<form
-					className={styles.fieldStack}
+					className="SecurityFieldStack"
 					onSubmit={mode === "update" ? submitUpdate : submitCreate}
 				>
 					{mode === "update" ? (
@@ -612,7 +605,7 @@ function MfaCard({ mfaEnabled }: { mfaEnabled: boolean }) {
 					)
 				}
 			/>
-			<CardBody className={styles.cardStack}>
+			<CardBody className="SecurityCardStack">
 				<ElevationPanel elevation={elevation} purpose="MFA changes" />
 
 				{mfaEnabled ? (
@@ -644,17 +637,17 @@ function MfaCard({ mfaEnabled }: { mfaEnabled: boolean }) {
 						Start enrollment
 					</Button>
 				) : (
-					<div className={styles.fieldStack}>
+					<div className="SecurityFieldStack">
 						{/* eslint-disable-next-line @next/next/no-img-element */}
-						<img src={enrollment.qrCode} alt="TOTP QR code" className={styles.qrCode} />
-						<p className={styles.secret}>
-							Secret: <code className={styles.secretValue}>{enrollment.secret}</code>
+						<img src={enrollment.qrCode} alt="TOTP QR code" className="SecurityQrCode" />
+						<p className="SecuritySecret">
+							Secret: <code className="SecuritySecretValue">{enrollment.secret}</code>
 						</p>
 						{getAppMode() === "demo" ? (
 							<Notice tone="info">Demo accepts any 6-digit code to complete enrollment.</Notice>
 						) : null}
-						<div className={styles.inlineForm}>
-							<div className={styles.inlineFormField}>
+						<div className="SecurityInlineForm">
+							<div className="SecurityInlineFormField">
 								<FormField
 									name="totp-code"
 									label="Code from authenticator"
@@ -733,21 +726,21 @@ function EmailChangeCard({ email }: { email: string }) {
 				title="Change email"
 				description="Verify current email, send a code to the new address, then confirm."
 			/>
-			<CardBody className={styles.cardStack}>
-				<p className={styles.currentEmail}>
-					Current: <span className={styles.currentEmailValue}>{email}</span>
+			<CardBody className="SecurityCardStack">
+				<p className="SecurityCurrentEmail">
+					Current: <span className="SecurityCurrentEmailValue">{email}</span>
 				</p>
 				<ElevationPanel elevation={elevation} purpose="changing email" />
 				{getAppMode() === "demo" ? (
 					<Notice tone="info">
 						Demo confirmation code is also{" "}
-						<code className={styles.codeMono}>{DEMO_VERIFICATION_CODE}</code>
+						<code className="SecurityCodeMono">{DEMO_VERIFICATION_CODE}</code>
 					</Notice>
 				) : null}
 
 				{!awaitingConfirm ? (
-					<div className={styles.inlineForm}>
-						<div className={styles.inlineFormField}>
+					<div className="SecurityInlineForm">
+						<div className="SecurityInlineFormField">
 							<FormField
 								name="new-email"
 								label="New email"
@@ -774,8 +767,8 @@ function EmailChangeCard({ email }: { email: string }) {
 						</Button>
 					</div>
 				) : (
-					<div className={styles.inlineForm}>
-						<div className={styles.inlineFormField}>
+					<div className="SecurityInlineForm">
+						<div className="SecurityInlineFormField">
 							<FormField
 								name="confirm-code"
 								label="Code from new email"

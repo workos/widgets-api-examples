@@ -3,7 +3,6 @@ import { CaretDownIcon, CalendarIcon, ClockIcon, MagnifyingGlassIcon } from "@ra
 import * as React from "react";
 import clsx from "clsx";
 import { useComposedRefs } from "@/lib/use-composed-refs";
-import styles from "./form-field.module.css";
 import { useLazyRef } from "@/lib/use-lazy-ref";
 
 type FieldElementType = "input" | "textarea" | "select";
@@ -176,7 +175,7 @@ function FormField<T extends FieldElementType>(props: FormFieldProps<T>) {
 	if (props.type === "search") {
 		leftSlot.push(
 			<MagnifyingGlassIcon
-				className={styles.searchIcon}
+				className="ui-FormFieldSearchIcon"
 				key="search-icon"
 				height={15}
 				width={15}
@@ -187,9 +186,10 @@ function FormField<T extends FieldElementType>(props: FormFieldProps<T>) {
 
 	if (props.type === "select") {
 		rightSlot.push(
-			<div aria-hidden key="select-icon" className={styles.slotButton}>
+			<div aria-hidden key="select-icon" className="ui-FormFieldSlotButton">
 				<CaretDownIcon
-					className={clsx(styles.slotIcon, disabled && styles.slotIconDisabled)}
+					className="ui-FormFieldSlotIcon"
+					data-ui-form-field-disabled={disabled || undefined}
 					height={15}
 					width={15}
 				/>
@@ -203,7 +203,7 @@ function FormField<T extends FieldElementType>(props: FormFieldProps<T>) {
 				data-temporal-trigger=""
 				key="calendar-button"
 				tabIndex={-1}
-				className={styles.slotButton}
+				className="ui-FormFieldSlotButton"
 				onClick={(event) => {
 					const input = inputRef.current;
 					if (input && isInputElement(input) && TEMPORAL_INPUT_TYPES.has(input.type)) {
@@ -216,7 +216,8 @@ function FormField<T extends FieldElementType>(props: FormFieldProps<T>) {
 				}}
 			>
 				<Icon
-					className={clsx(styles.slotIcon, disabled && styles.slotIconDisabled)}
+					className="ui-FormFieldSlotIcon"
+					data-ui-form-field-disabled={disabled || undefined}
 					height={15}
 					width={15}
 					aria-hidden
@@ -256,9 +257,12 @@ function FormField<T extends FieldElementType>(props: FormFieldProps<T>) {
 				disabled,
 			}}
 		>
-			<div className={styles.root}>
-				<div className={styles.labelRow}>
-					<label className={visuallyHideLabel ? styles.labelHidden : styles.label} htmlFor={id}>
+			<div className="ui-FormField" data-ui-component="form-field">
+				<div className="ui-FormFieldLabelRow">
+					<label
+						className={clsx("ui-FormFieldLabel", visuallyHideLabel && "sr-only")}
+						htmlFor={id}
+					>
 						{label}
 					</label>
 				</div>
@@ -299,12 +303,12 @@ function FormField<T extends FieldElementType>(props: FormFieldProps<T>) {
 					{rightSlot.length > 0 && <FormFieldSlot side="right">{rightSlot}</FormFieldSlot>}
 				</FormFieldControlRoot>
 				{hasInvalidText && (
-					<span className={styles.invalidText} color="red" id={invalidTextId}>
+					<span className="ui-FormFieldInvalidText" color="red" id={invalidTextId}>
 						{invalidText}
 					</span>
 				)}
 				{hasDescription && (
-					<span className={styles.description} id={descriptionId}>
+					<span className="ui-FormFieldDescription" id={descriptionId}>
 						{description}
 					</span>
 				)}
@@ -337,12 +341,9 @@ function FormFieldControlRoot({
 	return (
 		<div
 			style={style}
-			className={clsx(
-				className,
-				styles.controlRoot,
-				invalid && styles.controlRootInvalid,
-				disabled && styles.controlRootDisabled,
-			)}
+			className={clsx(className, "ui-FormFieldControlRoot")}
+			data-ui-form-field-invalid={invalid || undefined}
+			data-ui-form-field-disabled={disabled || undefined}
 			onPointerDown={(event) => {
 				onPointerDown?.(event);
 				const isRightClick = event.button === 2;
@@ -439,7 +440,7 @@ function FormFieldControl<T extends FieldElementType>({
 			disabled={disabled || undefined}
 			{...(props as any)}
 			ref={ref}
-			className={clsx(className, styles.control, disabled && styles.controlDisabled)}
+			className={clsx(className, "ui-FormFieldControl")}
 		/>
 	);
 }
@@ -477,7 +478,7 @@ function FormFieldInput({ className, type, ...props }: FormFieldInputProps) {
 			spellCheck="false"
 			{...props}
 			type={type}
-			className={clsx(className, styles.input)}
+			className={clsx(className, "ui-FormFieldInput")}
 		/>
 	);
 }
@@ -492,7 +493,9 @@ interface FormFieldSelectProps
 		> {}
 
 function FormFieldSelect({ className, ...props }: FormFieldSelectProps) {
-	return <FormFieldControl as="select" {...props} className={clsx(className, styles.select)} />;
+	return (
+		<FormFieldControl as="select" {...props} className={clsx(className, "ui-FormFieldSelect")} />
+	);
 }
 
 interface FormFieldTextareaOwnProps {}
@@ -505,7 +508,9 @@ interface FormFieldTextareaProps
 		> {}
 
 function FormFieldTextarea({ className, ...props }: FormFieldTextareaProps) {
-	return <FormFieldControl as="textarea" {...props} className={clsx(className, styles.textarea)} />;
+	return (
+		<FormFieldControl as="textarea" {...props} className={clsx(className, "ui-FormFieldTextarea")} />
+	);
 }
 
 interface FormFieldSlotOwnProps {
@@ -539,13 +544,10 @@ function FormFieldSlot({ className, side, ref: forwardedRef, ...slotProps }: For
 			data-side={side}
 			ref={ref}
 			{...slotProps}
-			className={clsx(
-				className,
-				styles.slot,
-				(type === "select" || TEMPORAL_INPUT_TYPES.has(type)) && styles.slotPicker,
-				side === "left" && styles.slotLeft,
-				side === "right" && styles.slotRight,
-			)}
+			className={clsx(className, "ui-FormFieldSlot")}
+			data-ui-form-field-slot-picker={
+				type === "select" || TEMPORAL_INPUT_TYPES.has(type) ? "" : undefined
+			}
 		/>
 	);
 }

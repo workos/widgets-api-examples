@@ -1,5 +1,3 @@
-import styles from "./page-title-section.module.css";
-
 export function PageTitleSection({
 	title,
 	description,
@@ -8,9 +6,9 @@ export function PageTitleSection({
 	description: string | React.ReactElement;
 }) {
 	return (
-		<div className={styles.root}>
-			<h2 className={styles.title}>{title}</h2>
-			<p className={styles.description}>{description}</p>
+		<div className="ui-PageTitleSection" data-ui-component="page-title-section">
+			<h2 className="ui-PageTitleSectionTitle">{title}</h2>
+			<p className="ui-PageTitleSectionDescription">{description}</p>
 		</div>
 	);
 }

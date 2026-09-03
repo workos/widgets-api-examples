@@ -1,5 +1,4 @@
-.pre {
-	composes: scrollbarSlim from "../../styles/shared.module.css";
+.ui-CodeBlock {
 	overflow: auto;
 	max-height: var(--code-block-max-height, 20rem);
 	border: 1px solid var(--color-line);
@@ -12,14 +11,12 @@
 	color: var(--color-ink-muted);
 }
 
-/* Disclosure --------------------------------------------------------------- */
-
-.disclosure {
+.ui-QueryDisclosure {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 }
 
-.toggle {
+.ui-QueryDisclosureToggle {
 	display: inline-flex;
 	align-items: center;
 	gap: var(--space-1-5);
@@ -37,22 +34,22 @@
 	}
 }
 
-.chevron {
+.ui-QueryDisclosureChevron {
 	transition: transform var(--duration-base) var(--ease-out);
+
+	.ui-QueryDisclosureToggle:where([aria-expanded="true"]) & {
+		transform: rotate(90deg);
+	}
 }
 
-.chevronOpen {
-	transform: rotate(90deg);
-}
-
-.panel {
+.ui-QueryDisclosurePanel {
 	margin-top: var(--space-2);
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-2);
 }
 
-.variablesLabel {
+.ui-QueryDisclosureVariablesLabel {
 	margin-bottom: var(--space-1);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-ink-subtle);

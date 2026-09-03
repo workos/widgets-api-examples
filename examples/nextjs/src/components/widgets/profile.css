@@ -1,4 +1,4 @@
-.layout {
+.ProfileLayout {
 	display: grid;
 	gap: var(--space-6);
 
@@ -7,7 +7,7 @@
 	}
 }
 
-.column {
+.ProfileColumn {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-6);
@@ -15,32 +15,32 @@
 
 /* User profile ------------------------------------------------------------- */
 
-.profileBody {
+.ProfileProfileBody {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-4);
 }
 
-.identity {
+.ProfileIdentity {
 	display: flex;
 	align-items: center;
 	gap: var(--space-3);
 }
 
-.name {
+.ProfileName {
 	font-size: var(--text-base);
 	line-height: var(--text-base-leading);
 	font-weight: var(--font-weight-semibold);
 	color: var(--color-ink);
 }
 
-.email {
+.ProfileEmail {
 	font-size: var(--text-sm);
 	line-height: var(--text-sm-leading);
 	color: var(--color-ink-muted);
 }
 
-.details {
+.ProfileDetails {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-2);
@@ -48,25 +48,25 @@
 	line-height: var(--text-sm-leading);
 }
 
-.row {
+.ProfileRow {
 	display: flex;
 	align-items: flex-start;
 	justify-content: space-between;
 	gap: var(--space-4);
 }
 
-.rowLabel {
+.ProfileRowLabel {
 	color: var(--color-ink-muted);
 }
 
-.rowValue {
+.ProfileRowValue {
 	min-width: 0;
 	text-align: right;
 	font-weight: var(--font-weight-medium);
 	color: var(--color-ink);
 }
 
-.userId {
+.ProfileUserId {
 	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
@@ -80,13 +80,13 @@
  * Sibling margins rather than flex, so the submit button keeps its intrinsic
  * width.
  */
-.form {
+.ProfileForm {
 	& > * + * {
 		margin-top: var(--space-4);
 	}
 }
 
-.nameFields {
+.ProfileNameFields {
 	display: grid;
 	gap: var(--space-4);
 
@@ -97,19 +97,19 @@
 
 /* Connected accounts ------------------------------------------------------- */
 
-.accounts {
+.ProfileAccounts {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-3);
 }
 
-.accountsEmpty {
+.ProfileAccountsEmpty {
 	font-size: var(--text-sm);
 	line-height: var(--text-sm-leading);
 	color: var(--color-ink-muted);
 }
 
-.account {
+.ProfileAccount {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -119,20 +119,20 @@
 	border-radius: var(--radius-lg);
 }
 
-.accountProvider {
+.ProfileAccountProvider {
 	font-size: var(--text-sm);
 	line-height: var(--text-sm-leading);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-ink);
 }
 
-.accountEmail {
+.ProfileAccountEmail {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.accountTime {
+.ProfileAccountTime {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-subtle);

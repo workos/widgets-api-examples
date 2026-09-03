@@ -2,22 +2,8 @@ import * as React from "react";
 import { Slot } from "radix-ui";
 import clsx from "clsx";
 
-import styles from "./button.module.css";
-
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md";
-
-const VARIANTS: Record<Variant, string> = {
-	primary: styles.primary,
-	secondary: styles.secondary,
-	ghost: styles.ghost,
-	danger: styles.danger,
-};
-
-const SIZES: Record<Size, string> = {
-	sm: styles.sm,
-	md: styles.md,
-};
 
 export function Button({
 	variant = "secondary",
@@ -42,11 +28,18 @@ export function Button({
 	asChild?: boolean;
 	children?: React.ReactNode;
 }) {
-	const classes = clsx(styles.button, VARIANTS[variant], SIZES[size], className);
+	const classes = clsx("ui-Button", className);
 
 	if (asChild) {
 		return (
-			<Slot.Root {...props} onClick={onClick} className={classes}>
+			<Slot.Root
+				{...props}
+				onClick={onClick}
+				className={classes}
+				data-ui-component="button"
+				data-ui-button-variant={variant}
+				data-ui-button-size={size}
+			>
 				{children}
 			</Slot.Root>
 		);
@@ -65,6 +58,9 @@ export function Button({
 				onClick?.(event);
 			}}
 			className={classes}
+			data-ui-component="button"
+			data-ui-button-variant={variant}
+			data-ui-button-size={size}
 		>
 			{loading ? <Spinner aria-hidden /> : null}
 			{children}
@@ -73,5 +69,11 @@ export function Button({
 }
 
 export function Spinner({ className }: { className?: string }) {
-	return <span aria-hidden className={clsx(styles.spinner, className)} />;
+	return (
+		<span
+			aria-hidden
+			className={clsx("ui-Spinner", className)}
+			data-ui-component="spinner"
+		/>
+	);
 }

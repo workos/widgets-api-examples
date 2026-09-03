@@ -1,9 +1,9 @@
-.shell {
+.AppShell {
 	display: flex;
 	min-height: 100dvh;
 }
 
-.navScrim {
+.AppShellNavScrim {
 	position: fixed;
 	inset: 0;
 	z-index: var(--z-nav-scrim);
@@ -11,14 +11,14 @@
 	backdrop-filter: blur(2px);
 }
 
-.column {
+.AppShellColumn {
 	display: flex;
 	min-width: 0;
 	flex: 1;
 	flex-direction: column;
 }
 
-.header {
+.AppShellHeader {
 	position: sticky;
 	top: 0;
 	z-index: var(--z-header);
@@ -36,7 +36,7 @@
 	}
 }
 
-.navToggle {
+.AppShellNavToggle {
 	border-radius: var(--radius-md);
 	padding: var(--space-1-5);
 	color: var(--color-ink-muted);
@@ -51,8 +51,7 @@
 	}
 }
 
-.pageTitle {
-	composes: truncate from "../../styles/shared.module.css";
+.AppShellPageTitle {
 	min-width: 0;
 	flex: 1;
 	font-size: var(--text-sm);
@@ -61,7 +60,7 @@
 	color: var(--color-ink);
 }
 
-.main {
+.AppShellMain {
 	isolation: isolate;
 	margin-inline: auto;
 	width: 100%;
@@ -74,9 +73,7 @@
 	}
 }
 
-/* Sidebar ------------------------------------------------------------------ */
-
-.sidebar {
+.AppShellSidebar {
 	position: fixed;
 	inset-block: 0;
 	left: 0;
@@ -96,13 +93,13 @@
 		height: 100dvh;
 		transform: none;
 	}
+
+	&:where([data-open]) {
+		transform: translateX(0);
+	}
 }
 
-.sidebarOpen {
-	transform: translateX(0);
-}
-
-.sidebarHeader {
+.AppShellSidebarHeader {
 	display: flex;
 	height: var(--header-height);
 	align-items: center;
@@ -111,7 +108,7 @@
 	padding-inline: var(--space-4);
 }
 
-.logo {
+.AppShellLogo {
 	display: grid;
 	place-items: center;
 	width: calc(var(--spacing) * 7);
@@ -124,26 +121,24 @@
 	user-select: none;
 }
 
-.identity {
+.AppShellIdentity {
 	min-width: 0;
 	flex: 1;
 }
 
-.appName {
-	composes: truncate from "../../styles/shared.module.css";
+.AppShellAppName {
 	font-size: var(--text-sm);
 	line-height: var(--text-sm-leading);
 	font-weight: var(--font-weight-semibold);
 	color: var(--color-ink);
 }
 
-.organization {
-	composes: truncate from "../../styles/shared.module.css";
+.AppShellOrganization {
 	font-size: var(--text-2xs);
 	color: var(--color-ink-subtle);
 }
 
-.navClose {
+.AppShellNavClose {
 	border-radius: var(--radius-md);
 	padding: var(--space-1);
 	color: var(--color-ink-subtle);
@@ -157,8 +152,7 @@
 	}
 }
 
-.nav {
-	composes: scrollbarSlim from "../../styles/shared.module.css";
+.AppShellNav {
 	display: flex;
 	flex: 1;
 	flex-direction: column;
@@ -167,11 +161,7 @@
 	padding: var(--space-4) var(--space-3);
 }
 
-.navHeading {
-	composes: visuallyHidden from "../../styles/shared.module.css";
-}
-
-.sectionLabel {
+.AppShellSectionLabel {
 	padding-inline: var(--space-2);
 	padding-bottom: var(--space-1-5);
 	font-size: var(--text-2xs);
@@ -181,13 +171,13 @@
 	color: var(--color-ink-subtle);
 }
 
-.sectionItems {
+.AppShellSectionItems {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space-0-5);
 }
 
-.navLink {
+.AppShellNavLink {
 	display: flex;
 	align-items: center;
 	gap: var(--space-2-5);
@@ -204,58 +194,56 @@
 		background-color: var(--color-raised);
 		color: var(--color-ink);
 	}
-}
 
-.navLinkActive {
-	background-color: var(--color-accent-soft);
-	color: var(--color-accent-ink);
-
-	&:hover {
+	&:where([data-active]) {
 		background-color: var(--color-accent-soft);
 		color: var(--color-accent-ink);
+
+		&:hover {
+			background-color: var(--color-accent-soft);
+			color: var(--color-accent-ink);
+		}
 	}
 }
 
-.sidebarFooter {
+.AppShellSidebarFooter {
 	border-top: 1px solid var(--color-line);
 	padding: var(--space-3);
 }
 
-.modeCard {
+.AppShellModeCard {
 	border: 1px solid var(--color-line);
 	border-radius: var(--radius-lg);
 	background-color: var(--color-raised);
 	padding: var(--space-3);
 }
 
-.modeHeader {
+.AppShellModeHeader {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: var(--space-2);
 }
 
-.modeTitle {
+.AppShellModeTitle {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	font-weight: var(--font-weight-semibold);
 	color: var(--color-ink);
 }
 
-.modeDescription {
+.AppShellModeDescription {
 	margin-top: var(--space-1-5);
 	font-size: var(--text-2xs);
 	line-height: var(--leading-relaxed);
 	color: var(--color-ink-muted);
 }
 
-/* User menu ---------------------------------------------------------------- */
-
-.userMenu {
+.AppShellUserMenu {
 	position: relative;
 }
 
-.userMenuTrigger {
+.AppShellUserMenuTrigger {
 	display: flex;
 	align-items: center;
 	border-radius: var(--radius-full);
@@ -266,7 +254,7 @@
 	}
 }
 
-.userMenuContent {
+.AppShellUserMenuContent {
 	width: 15rem;
 	overflow: hidden;
 	border: 1px solid var(--color-line);
@@ -275,27 +263,25 @@
 	box-shadow: var(--shadow-popover);
 }
 
-.userMenuHeader {
+.AppShellUserMenuHeader {
 	border-bottom: 1px solid var(--color-line);
 	padding: var(--space-3) var(--space-3-5);
 }
 
-.userMenuName {
-	composes: truncate from "../../styles/shared.module.css";
+.AppShellUserMenuName {
 	font-size: var(--text-sm);
 	line-height: var(--text-sm-leading);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-ink);
 }
 
-.userMenuEmail {
-	composes: truncate from "../../styles/shared.module.css";
+.AppShellUserMenuEmail {
 	font-size: var(--text-xs);
 	line-height: var(--text-xs-leading);
 	color: var(--color-ink-muted);
 }
 
-.userMenuItem {
+.AppShellUserMenuItem {
 	display: flex;
 	width: 100%;
 	align-items: center;

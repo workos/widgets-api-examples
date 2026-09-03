@@ -12,6 +12,7 @@ import {
 	prefetchGraphqlQueries,
 } from "@/lib/graphql/server";
 import { getAppSession } from "@/lib/workos/session";
+import { BreakpointsProvider } from "@/components/shell/breakpoints-context";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
 	const session = await getAppSession();
@@ -42,9 +43,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
 						organizationId: session.organizationId!,
 					}}
 				>
-					<AppShell user={session.user} mode={isLiveMode() ? "live" : "demo"}>
-						{children}
-					</AppShell>
+					<BreakpointsProvider>
+						<AppShell user={session.user} mode={isLiveMode() ? "live" : "demo"}>
+							{children}
+						</AppShell>
+					</BreakpointsProvider>
 				</AppSessionProvider>
 			</HydrationBoundary>
 		</WidgetsApiProvider>
