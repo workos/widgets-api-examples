@@ -25,13 +25,12 @@ import { PageTitleSection } from "@/components/ui/page-title-section";
 
 export default async function OverviewPage() {
 	const session = await getAppSession();
-	const organizationId = session?.organizationId;
 	const auditRange = overviewAuditRange();
 
-	if (organizationId) {
+	if (session?.organizationId) {
 		await prefetchGraphqlQueries([
 			{ document: ME_QUERY },
-			{ document: ORGANIZATION_QUERY, variables: { id: organizationId } },
+			{ document: ORGANIZATION_QUERY, variables: { id: session.organizationId } },
 			{ document: ORGANIZATION_MEMBERSHIPS_QUERY, variables: overviewMembersVariables() },
 			{ document: ROLES_QUERY },
 			{ document: SSO_CONNECTIONS_QUERY },
@@ -40,7 +39,10 @@ export default async function OverviewPage() {
 				document: AUDIT_EVENTS_QUERY,
 				variables: overviewAuditEventsVariables(auditRange),
 			},
-			{ document: EFFECTIVE_PERMISSIONS_QUERY, variables: overviewPermissionsVariables() },
+			{
+				document: EFFECTIVE_PERMISSIONS_QUERY,
+				variables: overviewPermissionsVariables(session.user.id),
+			},
 		]);
 	}
 

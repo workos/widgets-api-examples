@@ -22,9 +22,15 @@ export function rolesMembersVariables() {
 	};
 }
 
-export function rolesEffectiveVariables() {
+export function rolesEffectiveVariables(userId: string) {
 	return {
-		userId: null as string | null,
+		userId,
+	};
+}
+
+export function rolesPermissionsVariables() {
+	return {
+		limit: 100,
 	};
 }
 
@@ -62,8 +68,10 @@ export function overviewDirectoriesVariables() {
 	};
 }
 
-export function overviewPermissionsVariables() {
-	return {};
+export function overviewPermissionsVariables(userId: string) {
+	return {
+		userId,
+	};
 }
 
 /**

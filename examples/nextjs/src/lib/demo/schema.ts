@@ -91,7 +91,7 @@ export const clientApiSchema = /* GraphQL */ `
 		firstName: String
 		lastName: String
 		profilePictureUrl: String
-		mfaEnabled: Boolean
+		mfaEnabled: Boolean!
 		mfaLastUsedAt: DateTime
 		connectedAccounts: [ConnectedAccount!]!
 		createdAt: DateTime!
@@ -163,6 +163,11 @@ export const clientApiSchema = /* GraphQL */ `
 		system: Boolean!
 		createdAt: DateTime!
 		updatedAt: DateTime!
+	}
+
+	type PermissionList {
+		data: [Permission!]!
+		listMetadata: ListMetadata!
 	}
 
 	type SessionState {
@@ -268,7 +273,7 @@ export const clientApiSchema = /* GraphQL */ `
 		occurredAt: DateTime!
 		actor: AuditEventActor!
 		targets: [String!]!
-		data: JSON
+		data: JSON!
 		createdAt: DateTime!
 		updatedAt: DateTime!
 	}
@@ -287,7 +292,7 @@ export const clientApiSchema = /* GraphQL */ `
 		createdAt: DateTime!
 	}
 
-	input AuditEventFilter {
+	input AuditEventFilterInput {
 		rangeStart: DateTime!
 		rangeEnd: DateTime!
 		actions: [String!]
@@ -300,11 +305,11 @@ export const clientApiSchema = /* GraphQL */ `
 
 	type Query {
 		me: User!
-		user(id: ID!): User
+		user(id: ID!): User!
 		organizations: [UserOrganization!]!
-		organization(id: ID!): Organization
+		organization(id: ID!): Organization!
 		organizationMemberships(
-			limit: Int
+			limit: Int = 10
 			order: PaginationOrder
 			search: String
 			roleSlug: String
@@ -313,42 +318,48 @@ export const clientApiSchema = /* GraphQL */ `
 		): OrganizationMemberList!
 		roles: RolesResult!
 		role(id: ID!): Role
-		permissions: [Permission!]!
-		effectivePermissions(userId: ID): [Permission!]!
+		permissions(
+			limit: Int = 10
+			order: PaginationOrder
+			search: String
+			after: String
+			before: String
+		): PermissionList!
+		effectivePermissions(userId: ID!): [Permission!]!
 		sessions: [Session!]!
 		passkeys: [Passkey!]!
 		ssoConnections: [Connection!]!
-		ssoConnection(id: ID!): Connection
+		ssoConnection(id: ID!): Connection!
 		directoryConnections(
-			limit: Int
+			limit: Int = 10
 			order: PaginationOrder
 			search: String
 			after: String
 			before: String
 		): DirectoryList!
-		directoryConnection(id: ID!): Directory
+		directoryConnection(id: ID!): Directory!
 		directoryUsers(
 			directoryId: ID!
-			limit: Int
+			limit: Int = 10
 			order: PaginationOrder
 			after: String
 			before: String
 		): DirectoryUserList!
 		directoryGroups(
 			directoryId: ID!
-			limit: Int
+			limit: Int = 10
 			order: PaginationOrder
 			after: String
 			before: String
 		): DirectoryGroupList!
 		auditEvents(
-			filter: AuditEventFilter!
-			limit: Int
+			filter: AuditEventFilterInput!
+			limit: Int = 10
 			order: PaginationOrder
 			after: String
 			before: String
 		): AuditEventList!
-		auditEvent(id: ID!): AuditEvent
+		auditEvent(id: ID!): AuditEvent!
 		# Not shipped in the real Client API yet. Matches the agreed shape so the
 		# widget can follow a created export until it finishes generating.
 		auditLogExport(id: ID!): AuditLogExport!
@@ -367,7 +378,7 @@ export const clientApiSchema = /* GraphQL */ `
 	}
 
 	type InvalidLocale {
-		_placeholder: Boolean
+		_placeholder: Boolean!
 	}
 
 	union UpdateProfileResult = ProfileUpdated | InvalidLocale
@@ -389,7 +400,7 @@ export const clientApiSchema = /* GraphQL */ `
 	}
 
 	type InvalidInviteeRole {
-		roleSlug: String!
+		roleSlug: String
 	}
 
 	type InvalidInvitationExpiry {
@@ -507,7 +518,7 @@ export const clientApiSchema = /* GraphQL */ `
 	}
 
 	type UserAlreadyHasPassword {
-		_placeholder: Boolean
+		_placeholder: Boolean!
 	}
 
 	type PasswordPolicyViolation {
@@ -540,7 +551,7 @@ export const clientApiSchema = /* GraphQL */ `
 	}
 
 	type IncorrectPassword {
-		_placeholder: Boolean
+		_placeholder: Boolean!
 	}
 
 	union UpdatePasswordResult = PasswordUpdated | IncorrectPassword | PasswordPolicyViolation
@@ -552,15 +563,15 @@ export const clientApiSchema = /* GraphQL */ `
 	}
 
 	type TotpFactor {
-		authenticationFactorId: ID!
-		authenticationChallengeId: ID!
+		authenticationFactorId: String!
+		authenticationChallengeId: String!
 		uri: String!
 		secret: String!
 		qrCode: String!
 	}
 
 	type TotpAlreadyEnrolled {
-		_placeholder: Boolean
+		_placeholder: Boolean!
 	}
 
 	union EnrollTotpResult =
@@ -570,7 +581,7 @@ export const clientApiSchema = /* GraphQL */ `
 		| ElevatedAccessTokenInvalid
 
 	input VerifyTotpInput {
-		authenticationChallengeId: ID!
+		authenticationChallengeId: String!
 		code: String!
 		elevatedAccessToken: String!
 	}
@@ -580,7 +591,7 @@ export const clientApiSchema = /* GraphQL */ `
 	}
 
 	type TotpVerificationFailed {
-		_placeholder: Boolean
+		_placeholder: Boolean!
 	}
 
 	union VerifyTotpResult =
@@ -598,7 +609,7 @@ export const clientApiSchema = /* GraphQL */ `
 	}
 
 	type NoMfaFactorsEnrolled {
-		_placeholder: Boolean
+		_placeholder: Boolean!
 	}
 
 	union RemoveMfaFactorResult =
@@ -627,7 +638,7 @@ export const clientApiSchema = /* GraphQL */ `
 
 	type CurrentEmailVerified {
 		elevatedAccessToken: String!
-		expiresAt: DateTime!
+		expiresAt: String!
 	}
 
 	type VerificationCodeExpired {
@@ -703,7 +714,7 @@ export const clientApiSchema = /* GraphQL */ `
 
 	type EmailChangeConfirmed {
 		elevatedAccessToken: String!
-		expiresAt: DateTime!
+		expiresAt: String!
 		user: User!
 	}
 
@@ -800,7 +811,7 @@ export const clientApiSchema = /* GraphQL */ `
 
 	input UpdateSsoConnectionInput {
 		id: ID!
-		name: String!
+		name: String
 	}
 
 	# --- Audit logs ------------------------------------------------------------

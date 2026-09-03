@@ -56,7 +56,7 @@ export function OverviewWidgets({
 	auditRange: { rangeStart: string; rangeEnd: string };
 	auditWindowDays?: number;
 }) {
-	const { organizationId } = useAppSession();
+	const { organizationId, userId } = useAppSession();
 
 	const me = useQuery<MeQueryResult>(ME_QUERY);
 	const organization = useQuery<OrganizationQueryResult>(ORGANIZATION_QUERY, {
@@ -76,7 +76,7 @@ export function OverviewWidgets({
 	});
 
 	const permissions = useQuery<EffectivePermissionsQueryResult>(EFFECTIVE_PERMISSIONS_QUERY, {
-		variables: overviewPermissionsVariables(),
+		variables: overviewPermissionsVariables(userId),
 	});
 
 	// Waits on every query, including the three that degrade on their own, so the
@@ -221,7 +221,9 @@ export function OverviewWidgetsImpl({
 										<Tr key={event.id}>
 											<Td className="OverviewActivityCell">
 												<p className="OverviewActivityAction">{humanizeAction(event.action)}</p>
-												<p className="OverviewActivityActor">{event.actor.name ?? event.actor.id}</p>
+												<p className="OverviewActivityActor">
+													{event.actor.name ?? event.actor.id}
+												</p>
 											</Td>
 											<Td className="OverviewActivityTime">{relativeTime(event.occurredAt)}</Td>
 										</Tr>

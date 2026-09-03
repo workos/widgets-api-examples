@@ -6,6 +6,7 @@ import {
 	useGraphqlQuery as useQuery,
 } from "@/lib/graphql/hooks";
 
+import { useAppSession } from "@/components/shell/session-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
@@ -36,14 +37,20 @@ import type {
 	UpdateRoleMutationResult,
 } from "@/lib/graphql/types";
 import { displayName } from "@/lib/format";
-import { rolesEffectiveVariables, rolesMembersVariables } from "@/lib/graphql/page-queries";
+import {
+	rolesEffectiveVariables,
+	rolesMembersVariables,
+	rolesPermissionsVariables,
+} from "@/lib/graphql/page-queries";
 import { CheckboxGroup, Checkbox } from "@/components/ui/checkbox";
 import { useResetDialogKey } from "@/lib/use-reset-dialog-key";
 import { getErrorMessage } from "@/lib/utils";
 
 export function RolesWidget() {
 	const roles = useQuery<RolesQueryResult>(ROLES_QUERY);
-	const permissions = useQuery<PermissionsQueryResult>(PERMISSIONS_QUERY);
+	const permissions = useQuery<PermissionsQueryResult>(PERMISSIONS_QUERY, {
+		variables: rolesPermissionsVariables(),
+	});
 	const members = useQuery<OrganizationMembershipsQueryResult>(ORGANIZATION_MEMBERSHIPS_QUERY, {
 		variables: rolesMembersVariables(),
 	});
@@ -90,7 +97,7 @@ export function RolesWidget() {
 		>
 			<RolesWidgetImpl
 				roles={roles.data.roles.roles}
-				permissions={permissions.data.permissions}
+				permissions={permissions.data.permissions.data}
 				members={members.data.organizationMemberships.data}
 			/>
 		</ErrorBoundary>
@@ -106,13 +113,16 @@ export function RolesWidgetImpl({
 	permissions: Permission[];
 	members: OrganizationMember[];
 }) {
+	const { userId } = useAppSession();
 	const [inspectUserId, setInspectUserId] = React.useState("");
 	const [deletingId, setDeletingId] = React.useState<string | null>(null);
 
 	// Parameterized by the member being inspected, so it stays here and renders
 	// its own loading state rather than gating the page on every selection.
+	// `effectivePermissions` requires a user, so the "You" option resolves to the
+	// signed-in user rather than being left off the query.
 	const effective = useQuery<EffectivePermissionsQueryResult>(EFFECTIVE_PERMISSIONS_QUERY, {
-		variables: { ...rolesEffectiveVariables(), userId: inspectUserId || null },
+		variables: rolesEffectiveVariables(inspectUserId || userId),
 	});
 
 	type DialogState =

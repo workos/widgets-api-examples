@@ -165,11 +165,15 @@ const root = {
 
 	user: ({ id }: { id: string }) => {
 		const member = db().members.find((candidate) => candidate.id === id);
-		if (!member) return null;
+		if (!member) {
+			throw new Error(`User ${id} not found.`);
+		}
+
 		return {
 			...toGraphqlMember(member),
 			connectedAccounts: member.id === db().me.id ? db().me.connectedAccounts : [],
-			mfaEnabled: null,
+			// Only populated on `me`; false elsewhere, matching the Client API.
+			mfaEnabled: false,
 			mfaLastUsedAt: null,
 			updatedAt: member.createdAt,
 		};
@@ -177,7 +181,10 @@ const root = {
 
 	organizations: () => db().organizations,
 
-	organization: ({ id }: { id: string }) => (id === DEMO_ORG_ID ? db().organization : null),
+	organization: ({ id }: { id: string }) => {
+		if (id !== DEMO_ORG_ID) throw new Error(`Organization ${id} not found.`);
+		return db().organization;
+	},
 
 	organizationMemberships: (
 		args: PageArgs & { search?: string | null; roleSlug?: string | null },
@@ -213,11 +220,20 @@ const root = {
 		return role ? toGraphqlRole(role) : null;
 	},
 
-	permissions: () => db().permissions,
+	permissions: (args: PageArgs & { search?: string | null }) => {
+		let permissions = db().permissions;
+		// The Client API matches on slug only, as a case-insensitive substring.
+		if (args.search) {
+			const needle = args.search.toLowerCase();
+			permissions = permissions.filter((permission) =>
+				permission.slug.toLowerCase().includes(needle),
+			);
+		}
+		return paginate(permissions, args);
+	},
 
-	effectivePermissions: ({ userId }: { userId?: string | null }) => {
-		const targetId = userId ?? db().me.id;
-		const member = db().members.find((candidate) => candidate.id === targetId);
+	effectivePermissions: ({ userId }: { userId: string }) => {
+		const member = db().members.find((candidate) => candidate.id === userId);
 		if (!member) return [];
 
 		const slugs = new Set(
@@ -236,7 +252,8 @@ const root = {
 
 	ssoConnection: ({ id }: { id: string }) => {
 		const connection = db().ssoConnections.find((candidate) => candidate.id === id);
-		return connection ? withSetupComplete(connection) : null;
+		if (!connection) throw new Error(`SSO connection ${id} not found.`);
+		return withSetupComplete(connection);
 	},
 
 	directoryConnections: (args: PageArgs & { search?: string | null }) => {
@@ -250,8 +267,11 @@ const root = {
 		return paginate(directories, args);
 	},
 
-	directoryConnection: ({ id }: { id: string }) =>
-		db().directories.find((directory) => directory.id === id) ?? null,
+	directoryConnection: ({ id }: { id: string }) => {
+		const directory = db().directories.find((candidate) => candidate.id === id);
+		if (!directory) throw new Error(`Directory ${id} not found.`);
+		return directory;
+	},
 
 	directoryUsers: ({ directoryId, ...args }: PageArgs & { directoryId: string }) =>
 		paginate(
@@ -314,7 +334,13 @@ const root = {
 		return paginate(events, args);
 	},
 
-	auditEvent: ({ id }: { id: string }) => db().auditEvents.find((event) => event.id === id) ?? null,
+	auditEvent: ({ id }: { id: string }) => {
+		const event = db().auditEvents.find((candidate) => candidate.id === id);
+		if (!event) {
+			throw new Error(`Audit event ${id} not found.`);
+		}
+		return event;
+	},
 
 	// Backs the `auditLogExport` field the real Client API has not shipped yet.
 	auditLogExport: ({ id }: { id: string }) => {

@@ -259,10 +259,7 @@ function FormField<T extends FieldElementType>(props: FormFieldProps<T>) {
 		>
 			<div className="ui-FormField" data-ui-component="form-field">
 				<div className="ui-FormFieldLabelRow">
-					<label
-						className={clsx("ui-FormFieldLabel", visuallyHideLabel && "sr-only")}
-						htmlFor={id}
-					>
+					<label className={clsx("ui-FormFieldLabel", visuallyHideLabel && "sr-only")} htmlFor={id}>
 						{label}
 					</label>
 				</div>
@@ -509,7 +506,11 @@ interface FormFieldTextareaProps
 
 function FormFieldTextarea({ className, ...props }: FormFieldTextareaProps) {
 	return (
-		<FormFieldControl as="textarea" {...props} className={clsx(className, "ui-FormFieldTextarea")} />
+		<FormFieldControl
+			as="textarea"
+			{...props}
+			className={clsx(className, "ui-FormFieldTextarea")}
+		/>
 	);
 }
 

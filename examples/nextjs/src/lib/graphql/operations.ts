@@ -198,21 +198,27 @@ export const ROLE_QUERY = gql`
 `;
 
 export const PERMISSIONS_QUERY = gql`
-	query Permissions {
-		permissions {
-			id
-			slug
-			name
-			description
-			system
-			createdAt
-			updatedAt
+	query Permissions($limit: Int, $order: PaginationOrder, $search: String, $after: String) {
+		permissions(limit: $limit, order: $order, search: $search, after: $after) {
+			data {
+				id
+				slug
+				name
+				description
+				system
+				createdAt
+				updatedAt
+			}
+			listMetadata {
+				after
+				before
+			}
 		}
 	}
 `;
 
 export const EFFECTIVE_PERMISSIONS_QUERY = gql`
-	query EffectivePermissions($userId: ID) {
+	query EffectivePermissions($userId: ID!) {
 		effectivePermissions(userId: $userId) {
 			id
 			slug
@@ -345,7 +351,7 @@ export const DIRECTORY_GROUPS_QUERY = gql`
 
 export const AUDIT_EVENTS_QUERY = gql`
 	query AuditEvents(
-		$filter: AuditEventFilter!
+		$filter: AuditEventFilterInput!
 		$limit: Int
 		$order: PaginationOrder
 		$after: String

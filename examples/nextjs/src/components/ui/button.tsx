@@ -69,11 +69,5 @@ export function Button({
 }
 
 export function Spinner({ className }: { className?: string }) {
-	return (
-		<span
-			aria-hidden
-			className={clsx("ui-Spinner", className)}
-			data-ui-component="spinner"
-		/>
-	);
+	return <span aria-hidden className={clsx("ui-Spinner", className)} data-ui-component="spinner" />;
 }

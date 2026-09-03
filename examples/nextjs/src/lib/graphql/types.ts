@@ -239,7 +239,9 @@ export type OrganizationMembershipsQueryResult = {
 export type RolesQueryResult = {
 	roles: { multipleRolesEnabled: boolean; roles: Role[] };
 };
-export type PermissionsQueryResult = { permissions: Permission[] };
+export type PermissionsQueryResult = {
+	permissions: { data: Permission[]; listMetadata: ListMetadata };
+};
 export type EffectivePermissionsQueryResult = { effectivePermissions: Permission[] };
 export type SessionsQueryResult = { sessions: Session[] };
 export type PasskeysQueryResult = { passkeys: Passkey[] };
