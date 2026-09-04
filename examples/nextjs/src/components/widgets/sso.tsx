@@ -19,6 +19,7 @@ import { formatDateTime, humanizeConnectionType } from "@/lib/format";
 import {
 	CREATE_SSO_CONNECTION_MUTATION,
 	DELETE_SSO_CONNECTION_MUTATION,
+	OVERVIEW_QUERY,
 	SSO_CONNECTION_QUERY,
 	SSO_CONNECTIONS_QUERY,
 	UPDATE_SSO_CONNECTION_MUTATION,
@@ -130,7 +131,7 @@ export function SsoWidgetImpl({ connections }: { connections: Connection[] }) {
 	const deleteMutation = useMutation<DeleteSsoConnectionMutationResult>(
 		DELETE_SSO_CONNECTION_MUTATION,
 		{
-			invalidate: [SSO_CONNECTIONS_QUERY, SSO_CONNECTION_QUERY],
+			invalidate: [SSO_CONNECTIONS_QUERY, SSO_CONNECTION_QUERY, OVERVIEW_QUERY],
 			onSuccess: () => {
 				setDeletingId(null);
 				setDetailId(null);
@@ -315,7 +316,7 @@ function CreateDialog({
 	const createMutation = useMutation<CreateSsoConnectionMutationResult>(
 		CREATE_SSO_CONNECTION_MUTATION,
 		{
-			invalidate: [SSO_CONNECTIONS_QUERY],
+			invalidate: [SSO_CONNECTIONS_QUERY, OVERVIEW_QUERY],
 			onSuccess: onCreateSuccess,
 		},
 	);
@@ -386,7 +387,7 @@ function RenameDialog({
 	const updateMutation = useMutation<UpdateSsoConnectionMutationResult>(
 		UPDATE_SSO_CONNECTION_MUTATION,
 		{
-			invalidate: [SSO_CONNECTIONS_QUERY, SSO_CONNECTION_QUERY],
+			invalidate: [SSO_CONNECTIONS_QUERY, SSO_CONNECTION_QUERY, OVERVIEW_QUERY],
 			onSuccess: onUpdateSuccess,
 		},
 	);

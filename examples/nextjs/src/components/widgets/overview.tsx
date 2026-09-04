@@ -9,40 +9,24 @@ import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { EmptyState, PageSkeleton } from "@/components/ui/feedback";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 import { Table, Td, Tr } from "@/components/ui/table";
-import {
-	AUDIT_EVENTS_QUERY,
-	DIRECTORY_CONNECTIONS_QUERY,
-	EFFECTIVE_PERMISSIONS_QUERY,
-	ME_QUERY,
-	ORGANIZATION_MEMBERSHIPS_QUERY,
-	ORGANIZATION_QUERY,
-	ROLES_QUERY,
-	SSO_CONNECTIONS_QUERY,
-} from "@/lib/graphql/operations";
+import { AUDIT_EVENTS_QUERY, ORGANIZATION_QUERY, OVERVIEW_QUERY } from "@/lib/graphql/operations";
 import type {
 	AuditEvent,
 	AuditEventsQueryResult,
 	Connection,
 	Directory,
-	DirectoryConnectionsQueryResult,
-	EffectivePermissionsQueryResult,
-	MeQueryResult,
 	Organization,
 	OrganizationMember,
-	OrganizationMembershipsQueryResult,
 	OrganizationQueryResult,
+	OverviewQueryResult,
 	Role,
-	RolesQueryResult,
-	SsoConnectionsQueryResult,
 } from "@/lib/graphql/types";
 import { formatDate, humanizeAction, relativeTime } from "@/lib/format";
 import { getErrorMessage } from "@/lib/utils";
 import {
 	AUDIT_WINDOW_DAYS,
 	overviewAuditEventsVariables,
-	overviewDirectoriesVariables,
-	overviewMembersVariables,
-	overviewPermissionsVariables,
+	overviewVariables,
 } from "@/lib/graphql/page-queries";
 
 export function OverviewWidgets({
@@ -53,52 +37,33 @@ export function OverviewWidgets({
 	auditRange: { rangeStart: string; rangeEnd: string };
 	auditWindowDays?: number;
 }) {
-	const { organizationId, userId } = useAppSession();
-	const me = useQuery<MeQueryResult>(ME_QUERY);
+	const { organizationId } = useAppSession();
+	// Members, roles, SSO connections and directories arrive as one operation.
+	const overview = useQuery<OverviewQueryResult>(OVERVIEW_QUERY, {
+		variables: overviewVariables(),
+	});
+
 	const organization = useQuery<OrganizationQueryResult>(ORGANIZATION_QUERY, {
 		variables: { id: organizationId },
-	});
-	const members = useQuery<OrganizationMembershipsQueryResult>(ORGANIZATION_MEMBERSHIPS_QUERY, {
-		variables: overviewMembersVariables(),
-	});
-	const roles = useQuery<RolesQueryResult>(ROLES_QUERY);
-	const sso = useQuery<SsoConnectionsQueryResult>(SSO_CONNECTIONS_QUERY);
-	const directories = useQuery<DirectoryConnectionsQueryResult>(DIRECTORY_CONNECTIONS_QUERY, {
-		variables: overviewDirectoriesVariables(),
 	});
 
 	const auditEvents = useQuery<AuditEventsQueryResult>(AUDIT_EVENTS_QUERY, {
 		variables: overviewAuditEventsVariables(auditRange),
 	});
 
-	const permissions = useQuery<EffectivePermissionsQueryResult>(EFFECTIVE_PERMISSIONS_QUERY, {
-		variables: overviewPermissionsVariables(userId),
-	});
-
-	// Waits on every query, including the three that degrade on their own, so the
+	// Waits on every query, including the two that degrade on their own, so the
 	// page paints in one pass instead of card by card.
-	if (
-		me.isPending ||
-		organization.isPending ||
-		members.isPending ||
-		roles.isPending ||
-		sso.isPending ||
-		directories.isPending ||
-		auditEvents.isPending ||
-		permissions.isPending
-	) {
+	if (overview.isPending || organization.isPending || auditEvents.isPending) {
 		return <PageSkeleton />;
 	}
 
-	// `organization`, `auditEvents` and `permissions` render a fallback inside
-	// their own card, so only the queries the rest of the page cannot render
-	// without are gated here.
-	if (me.isError || members.isError || roles.isError || sso.isError || directories.isError) {
-		const error = me.error ?? members.error ?? roles.error ?? sso.error ?? directories.error;
+	// `organization` and `auditEvents` render a fallback inside their own card,
+	// so only the operation the rest of the page cannot render without is gated here.
+	if (overview.isError) {
 		return (
 			<EmptyState
 				title="Overview unavailable"
-				description={error?.message ?? "Could not load the overview."}
+				description={overview.error?.message ?? "Could not load the overview."}
 			/>
 		);
 	}
@@ -114,11 +79,11 @@ export function OverviewWidgets({
 		>
 			<OverviewWidgetsImpl
 				auditWindowDays={auditWindowDays}
-				members={members.data.organizationMemberships.data}
-				roles={roles.data.roles.roles}
-				multipleRolesEnabled={roles.data.roles.multipleRolesEnabled}
-				ssoConnections={sso.data.ssoConnections}
-				directories={directories.data.directoryConnections.data}
+				members={overview.data.organizationMemberships.data}
+				roles={overview.data.roles.roles}
+				multipleRolesEnabled={overview.data.roles.multipleRolesEnabled}
+				ssoConnections={overview.data.ssoConnections}
+				directories={overview.data.directoryConnections.data}
 				organization={organization.data?.organization ?? null}
 				organizationError={organization.error}
 				auditEvents={auditEvents.data?.auditEvents.data ?? null}

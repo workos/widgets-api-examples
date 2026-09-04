@@ -81,9 +81,9 @@ function SidebarImpl({
 				</span>
 				<div className="AppShellIdentity">
 					<p className="AppShellAppName truncate">SuperApp</p>
-					<p className="AppShellOrganization truncate">
+					<div className="AppShellOrganization truncate">
 						<OrganizationSwitcher />
-					</p>
+					</div>
 				</div>
 				<button
 					type="button"

@@ -19,6 +19,7 @@ import {
 	EFFECTIVE_PERMISSIONS_QUERY,
 	INVITE_USER_MUTATION,
 	ORGANIZATION_MEMBERSHIPS_QUERY,
+	OVERVIEW_QUERY,
 	REMOVE_MEMBER_MUTATION,
 	RESEND_INVITATION_MUTATION,
 	REVOKE_INVITATION_MUTATION,
@@ -227,7 +228,7 @@ function MemberRow({
 	const [actionError, setActionError] = React.useState<string | null>(null);
 
 	const updateMutation = useMutation<UpdateMemberRoleMutationResult>(UPDATE_MEMBER_ROLE_MUTATION, {
-		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY, EFFECTIVE_PERMISSIONS_QUERY],
+		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY, EFFECTIVE_PERMISSIONS_QUERY, OVERVIEW_QUERY],
 		onSuccess: (data) => {
 			const error = unionErrorMessage(data.updateMemberRole);
 			if (error) {
@@ -240,7 +241,7 @@ function MemberRow({
 	});
 
 	const removeMutation = useMutation<RemoveMemberMutationResult>(REMOVE_MEMBER_MUTATION, {
-		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY],
+		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY, OVERVIEW_QUERY],
 		onSuccess: (data) => {
 			const error = unionErrorMessage(data.removeMember);
 			if (error) {
@@ -254,7 +255,7 @@ function MemberRow({
 	});
 
 	const revokeMutation = useMutation<RevokeInvitationMutationResult>(REVOKE_INVITATION_MUTATION, {
-		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY],
+		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY, OVERVIEW_QUERY],
 		onSuccess: (data) => {
 			const error = unionErrorMessage(data.revokeInvitation);
 			if (error) {
@@ -267,7 +268,7 @@ function MemberRow({
 	});
 
 	const resendMutation = useMutation<ResendInvitationMutationResult>(RESEND_INVITATION_MUTATION, {
-		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY],
+		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY, OVERVIEW_QUERY],
 		onSuccess: (data) => {
 			const error = unionErrorMessage(data.resendInvitation);
 			if (error) {
@@ -393,7 +394,7 @@ function InviteDialog({
 }) {
 	const [error, setError] = React.useState<string | null>(null);
 	const inviteMutation = useMutation<InviteUserMutationResult>(INVITE_USER_MUTATION, {
-		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY],
+		invalidate: [ORGANIZATION_MEMBERSHIPS_QUERY, OVERVIEW_QUERY],
 		onSuccess: (result) => {
 			const message = unionErrorMessage(result.inviteUser);
 			if (message) {

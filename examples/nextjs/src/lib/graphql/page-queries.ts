@@ -55,22 +55,12 @@ export function directoryGroupsVariables(directoryId: string) {
 	};
 }
 
-export function overviewMembersVariables() {
+/** Merged variables for the composed overview operation; each root field needs its own names. */
+export function overviewVariables() {
 	return {
-		limit: 100,
-		order: "Desc" as const,
-	};
-}
-
-export function overviewDirectoriesVariables() {
-	return {
-		limit: 10,
-	};
-}
-
-export function overviewPermissionsVariables(userId: string) {
-	return {
-		userId,
+		memberLimit: 100,
+		memberOrder: "Desc" as const,
+		directoryLimit: 10,
 	};
 }
 

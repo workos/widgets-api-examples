@@ -20,6 +20,7 @@ import {
 	DELETE_ROLE_MUTATION,
 	EFFECTIVE_PERMISSIONS_QUERY,
 	ORGANIZATION_MEMBERSHIPS_QUERY,
+	OVERVIEW_QUERY,
 	PERMISSIONS_QUERY,
 	ROLES_QUERY,
 	UPDATE_ROLE_MUTATION,
@@ -156,7 +157,12 @@ export function RolesWidgetImpl({
 	);
 
 	const deleteMutation = useMutation<DeleteRoleMutationResult>(DELETE_ROLE_MUTATION, {
-		invalidate: [ROLES_QUERY, ORGANIZATION_MEMBERSHIPS_QUERY, EFFECTIVE_PERMISSIONS_QUERY],
+		invalidate: [
+			ROLES_QUERY,
+			ORGANIZATION_MEMBERSHIPS_QUERY,
+			EFFECTIVE_PERMISSIONS_QUERY,
+			OVERVIEW_QUERY,
+		],
 		onSuccess: () => {
 			setDeletingId(null);
 		},
@@ -341,7 +347,7 @@ function CreateRoleDialog({
 	onCreateSuccess: (result: CreateRoleMutationResult) => void;
 }) {
 	const createMutation = useMutation<CreateRoleMutationResult>(CREATE_ROLE_MUTATION, {
-		invalidate: [ROLES_QUERY],
+		invalidate: [ROLES_QUERY, OVERVIEW_QUERY],
 		onSuccess: onCreateSuccess,
 	});
 
@@ -380,7 +386,12 @@ function EditRoleDialog({
 	onUpdateSuccess: (result: UpdateRoleMutationResult) => void;
 }) {
 	const updateMutation = useMutation<UpdateRoleMutationResult>(UPDATE_ROLE_MUTATION, {
-		invalidate: [ROLES_QUERY, ORGANIZATION_MEMBERSHIPS_QUERY, EFFECTIVE_PERMISSIONS_QUERY],
+		invalidate: [
+			ROLES_QUERY,
+			ORGANIZATION_MEMBERSHIPS_QUERY,
+			EFFECTIVE_PERMISSIONS_QUERY,
+			OVERVIEW_QUERY,
+		],
 		onSuccess: onUpdateSuccess,
 	});
 

@@ -1,22 +1,11 @@
 import { OverviewWidgets } from "@/components/widgets/overview";
 import { HydrationBoundary } from "@tanstack/react-query";
-import {
-	AUDIT_EVENTS_QUERY,
-	DIRECTORY_CONNECTIONS_QUERY,
-	EFFECTIVE_PERMISSIONS_QUERY,
-	ME_QUERY,
-	ORGANIZATION_MEMBERSHIPS_QUERY,
-	ORGANIZATION_QUERY,
-	ROLES_QUERY,
-	SSO_CONNECTIONS_QUERY,
-} from "@/lib/graphql/operations";
+import { AUDIT_EVENTS_QUERY, ORGANIZATION_QUERY, OVERVIEW_QUERY } from "@/lib/graphql/operations";
 import {
 	AUDIT_WINDOW_DAYS,
 	overviewAuditEventsVariables,
 	overviewAuditRange,
-	overviewDirectoriesVariables,
-	overviewMembersVariables,
-	overviewPermissionsVariables,
+	overviewVariables,
 } from "@/lib/graphql/page-queries";
 import { dehydrateQueryClient, prefetchGraphqlQueries } from "@/lib/graphql/server";
 import { getAppSession } from "@/lib/workos/session";
@@ -29,19 +18,11 @@ export default async function OverviewPage() {
 
 	if (session?.organizationId) {
 		await prefetchGraphqlQueries([
-			{ document: ME_QUERY },
+			{ document: OVERVIEW_QUERY, variables: overviewVariables() },
 			{ document: ORGANIZATION_QUERY, variables: { id: session.organizationId } },
-			{ document: ORGANIZATION_MEMBERSHIPS_QUERY, variables: overviewMembersVariables() },
-			{ document: ROLES_QUERY },
-			{ document: SSO_CONNECTIONS_QUERY },
-			{ document: DIRECTORY_CONNECTIONS_QUERY, variables: overviewDirectoriesVariables() },
 			{
 				document: AUDIT_EVENTS_QUERY,
 				variables: overviewAuditEventsVariables(auditRange),
-			},
-			{
-				document: EFFECTIVE_PERMISSIONS_QUERY,
-				variables: overviewPermissionsVariables(session.user.id),
 			},
 		]);
 	}

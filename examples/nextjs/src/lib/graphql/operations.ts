@@ -305,6 +305,43 @@ export const DIRECTORY_CONNECTIONS_QUERY = gql`
 	${DIRECTORY_CONNECTION_FIELDS}
 `;
 
+/**
+ * The overview page's four unconditional lists in one operation.
+ *
+ * A GraphQL operation can select any number of root fields, so this is one
+ * round trip instead of four. `organization` and `auditEvents` stay separate:
+ * both are non-null in the schema, so an error on either would propagate to the
+ * root and null the whole response, and the overview renders a per-card
+ * fallback for them instead of failing the page.
+ */
+export const OVERVIEW_QUERY = gql`
+	query Overview($memberLimit: Int, $memberOrder: PaginationOrder, $directoryLimit: Int) {
+		organizationMemberships(limit: $memberLimit, order: $memberOrder) {
+			data {
+				...MemberFields
+			}
+		}
+		roles {
+			multipleRolesEnabled
+			roles {
+				...RoleFields
+			}
+		}
+		ssoConnections {
+			...ConnectionFields
+		}
+		directoryConnections(limit: $directoryLimit) {
+			data {
+				...DirectoryConnectionFields
+			}
+		}
+	}
+	${MEMBER_FIELDS}
+	${ROLE_FIELDS}
+	${CONNECTION_FIELDS}
+	${DIRECTORY_CONNECTION_FIELDS}
+`;
+
 export const DIRECTORY_USERS_QUERY = gql`
 	query DirectoryUsers($directoryId: ID!, $limit: Int, $after: String) {
 		directoryUsers(directoryId: $directoryId, limit: $limit, after: $after) {

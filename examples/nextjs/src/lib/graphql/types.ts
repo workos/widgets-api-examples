@@ -239,6 +239,13 @@ export type OrganizationMembershipsQueryResult = {
 export type RolesQueryResult = {
 	roles: { multipleRolesEnabled: boolean; roles: Role[] };
 };
+/** Four root fields in one operation; no `listMetadata` because the overview does not paginate. */
+export type OverviewQueryResult = {
+	organizationMemberships: { data: OrganizationMember[] };
+	roles: { multipleRolesEnabled: boolean; roles: Role[] };
+	ssoConnections: Connection[];
+	directoryConnections: { data: Directory[] };
+};
 export type PermissionsQueryResult = {
 	permissions: { data: Permission[]; listMetadata: ListMetadata };
 };
