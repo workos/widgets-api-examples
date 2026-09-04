@@ -27,6 +27,7 @@
 }
 
 .OrganizationSwitcherItem {
+	user-select: none;
 	display: flex;
 	width: 100%;
 	align-items: center;
