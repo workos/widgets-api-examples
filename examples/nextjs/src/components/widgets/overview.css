@@ -117,59 +117,6 @@
 	color: var(--color-ink-subtle);
 }
 
-/* Your access -------------------------------------------------------------- */
-
-.OverviewAccessBody {
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-3);
-}
-
-.OverviewIdentity {
-	display: flex;
-	align-items: center;
-	gap: var(--space-3);
-}
-
-.OverviewIdentityText {
-	min-width: 0;
-}
-
-.OverviewIdentityName {
-	font-size: var(--text-sm);
-	line-height: var(--text-sm-leading);
-	font-weight: var(--font-weight-medium);
-	color: var(--color-ink);
-}
-
-.OverviewIdentityEmail {
-	font-size: var(--text-xs);
-	line-height: var(--text-xs-leading);
-	color: var(--color-ink-muted);
-}
-
-.OverviewPermissionsNote {
-	font-size: var(--text-xs);
-	line-height: var(--text-xs-leading);
-	color: var(--color-ink-muted);
-}
-
-.OverviewPermissionList {
-	display: flex;
-	flex-wrap: wrap;
-	gap: var(--space-1-5);
-}
-
-.OverviewPermission {
-	border: 1px solid var(--color-line);
-	border-radius: var(--radius-md);
-	background-color: var(--color-raised);
-	padding: var(--space-0-5) var(--space-1-5);
-	font-family: var(--font-mono);
-	font-size: var(--text-2xs);
-	color: var(--color-ink-subtle);
-}
-
 /* Organization ------------------------------------------------------------- */
 
 .OverviewDetailList {
@@ -203,41 +150,4 @@
 	text-align: right;
 	font-weight: var(--font-weight-medium);
 	color: var(--color-ink);
-}
-
-/* Newest members ----------------------------------------------------------- */
-
-.OverviewLastActiveHeader {
-	text-align: right;
-}
-
-.OverviewMember {
-	display: flex;
-	align-items: center;
-	gap: var(--space-2-5);
-}
-
-.OverviewMemberText {
-	min-width: 0;
-}
-
-.OverviewMemberName {
-	font-weight: var(--font-weight-medium);
-}
-
-.OverviewMemberEmail {
-	font-size: var(--text-xs);
-	line-height: var(--text-xs-leading);
-	color: var(--color-ink-muted);
-}
-
-.OverviewMemberRoles {
-	color: var(--color-ink-muted);
-}
-
-.OverviewMemberActivity {
-	text-align: right;
-	font-size: var(--text-xs);
-	line-height: var(--text-xs-leading);
-	color: var(--color-ink-subtle);
 }

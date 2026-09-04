@@ -4,12 +4,11 @@ import { useGraphqlQuery as useQuery } from "@/lib/graphql/hooks";
 import Link from "next/link";
 
 import { useAppSession } from "@/components/shell/session-context";
-import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { EmptyState, PageSkeleton } from "@/components/ui/feedback";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
-import { Table, Td, Th, Tr } from "@/components/ui/table";
+import { Table, Td, Tr } from "@/components/ui/table";
 import {
 	AUDIT_EVENTS_QUERY,
 	DIRECTORY_CONNECTIONS_QUERY,
@@ -32,13 +31,11 @@ import type {
 	OrganizationMember,
 	OrganizationMembershipsQueryResult,
 	OrganizationQueryResult,
-	Permission,
 	Role,
 	RolesQueryResult,
 	SsoConnectionsQueryResult,
-	User,
 } from "@/lib/graphql/types";
-import { displayName, formatDate, humanizeAction, relativeTime } from "@/lib/format";
+import { formatDate, humanizeAction, relativeTime } from "@/lib/format";
 import { getErrorMessage } from "@/lib/utils";
 import {
 	AUDIT_WINDOW_DAYS,
@@ -57,7 +54,6 @@ export function OverviewWidgets({
 	auditWindowDays?: number;
 }) {
 	const { organizationId, userId } = useAppSession();
-
 	const me = useQuery<MeQueryResult>(ME_QUERY);
 	const organization = useQuery<OrganizationQueryResult>(ORGANIZATION_QUERY, {
 		variables: { id: organizationId },
@@ -118,7 +114,6 @@ export function OverviewWidgets({
 		>
 			<OverviewWidgetsImpl
 				auditWindowDays={auditWindowDays}
-				user={me.data.me}
 				members={members.data.organizationMemberships.data}
 				roles={roles.data.roles.roles}
 				multipleRolesEnabled={roles.data.roles.multipleRolesEnabled}
@@ -128,8 +123,6 @@ export function OverviewWidgets({
 				organizationError={organization.error}
 				auditEvents={auditEvents.data?.auditEvents.data ?? null}
 				auditEventsError={auditEvents.error}
-				permissions={permissions.data?.effectivePermissions ?? null}
-				permissionsError={permissions.error}
 			/>
 		</ErrorBoundary>
 	);
@@ -137,7 +130,6 @@ export function OverviewWidgets({
 
 export function OverviewWidgetsImpl({
 	auditWindowDays,
-	user,
 	members,
 	roles,
 	multipleRolesEnabled,
@@ -147,11 +139,8 @@ export function OverviewWidgetsImpl({
 	organizationError,
 	auditEvents,
 	auditEventsError,
-	permissions,
-	permissionsError,
 }: {
 	auditWindowDays: number;
-	user: User;
 	members: OrganizationMember[];
 	roles: Role[];
 	multipleRolesEnabled: boolean;
@@ -162,8 +151,6 @@ export function OverviewWidgetsImpl({
 	organizationError: Error | null;
 	auditEvents: AuditEvent[] | null;
 	auditEventsError: Error | null;
-	permissions: Permission[] | null;
-	permissionsError: Error | null;
 }) {
 	const active = members.filter((member) => member.status === "Active");
 	const pending = members.filter((member) => member.status === "Invited");
@@ -236,40 +223,6 @@ export function OverviewWidgetsImpl({
 
 				<div className="OverviewSideColumn">
 					<Card>
-						<CardHeader
-							title="Your access"
-							description="Permissions granted by your role in this organization."
-						/>
-						<CardBody className="OverviewAccessBody">
-							<div className="OverviewIdentity">
-								<Avatar
-									email={user.email}
-									firstName={user.firstName}
-									lastName={user.lastName}
-									src={user.profilePictureUrl}
-								/>
-								<div className="OverviewIdentityText">
-									<p className="OverviewIdentityName truncate">{displayName(user)}</p>
-									<p className="OverviewIdentityEmail truncate">{user.email}</p>
-								</div>
-							</div>
-
-							{permissionsError ? (
-								<p className="OverviewPermissionsNote">
-									Requires the <code>role:read</code> grant.
-								</p>
-							) : (
-								<div className="OverviewPermissionList">
-									{permissions?.map((permission) => (
-										<code key={permission.id} className="OverviewPermission">
-											{permission.slug}
-										</code>
-									))}
-								</div>
-							)}
-						</CardBody>
-					</Card>
-					<Card>
 						<CardHeader title="Organization" />
 						<CardBody>
 							{organization ? (
@@ -304,58 +257,6 @@ export function OverviewWidgetsImpl({
 					</Card>
 				</div>
 			</div>
-
-			<Card>
-				<CardHeader
-					title="Newest members"
-					description="The five most recently added people in this organization."
-					actions={
-						<Link href="/members" className="OverviewHeaderLink">
-							Manage members
-						</Link>
-					}
-				/>
-				<Table>
-					<thead>
-						<tr>
-							<Th>Member</Th>
-							<Th>Role</Th>
-							<Th>Status</Th>
-							<Th className="OverviewLastActiveHeader">Last active</Th>
-						</tr>
-					</thead>
-					<tbody>
-						{members.slice(0, 5).map((member) => (
-							<Tr key={member.id}>
-								<Td>
-									<div className="OverviewMember">
-										<Avatar
-											size="sm"
-											email={member.email}
-											firstName={member.firstName}
-											lastName={member.lastName}
-											src={member.profilePictureUrl}
-										/>
-										<div className="OverviewMemberText">
-											<p className="OverviewMemberName truncate">{displayName(member)}</p>
-											<p className="OverviewMemberEmail truncate">{member.email}</p>
-										</div>
-									</div>
-								</Td>
-								<Td className="OverviewMemberRoles">
-									{member.roles.map((role) => role.name).join(", ") || "—"}
-								</Td>
-								<Td>
-									<Badge tone={member.status === "Active" ? "positive" : "caution"}>
-										{member.status}
-									</Badge>
-								</Td>
-								<Td className="OverviewMemberActivity">{relativeTime(member.lastActivityAt)}</Td>
-							</Tr>
-						))}
-					</tbody>
-				</Table>
-			</Card>
 		</div>
 	);
 }
